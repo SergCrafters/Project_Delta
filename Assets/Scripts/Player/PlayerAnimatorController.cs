@@ -3,13 +3,6 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 public class PlayerAnimatorController : MonoBehaviour
 {
-    [Header("Animator References")]
-    [SerializeField] private Animator animator;
-    [SerializeField] private Player_Mover _playerMover;
-
-    [Header("Animation Settings")]
-    [SerializeField] private float movementThreshold = 0.1f;
-
     private const int DIRECTION_LEFT = 0;
     private const int DIRECTION_UP = 1;
     private const int DIRECTION_RIGHT = 2;
@@ -17,6 +10,10 @@ public class PlayerAnimatorController : MonoBehaviour
 
     private const string HORIZONTAL_AXIS = "Horizontal";
     private const string VERTICAL_AXIS = "Vertical";
+ 
+    [SerializeField] private Animator animator;
+    [SerializeField] private Player_Mover _playerMover;
+    [SerializeField] private float movementThreshold = 0.1f;
 
     private int currentDirection = DIRECTION_RIGHT;
     private bool isMoving;
@@ -41,7 +38,9 @@ public class PlayerAnimatorController : MonoBehaviour
 
         isMoving = movementInput.magnitude > movementThreshold;
         bool _isAttack = _playerMover.GetIsAttack();
-        animator.SetInteger("Action", _isAttack ? 2 : isMoving ? 1 : 0);
+        bool _isDash = _playerMover.GetIsDash();
+
+        animator.SetInteger("Action", _isDash ? 3 : _isAttack ? 2 : isMoving ? 1 : 0);
 
         if (isMoving)
         {

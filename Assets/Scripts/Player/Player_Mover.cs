@@ -6,35 +6,39 @@ public class Player_Mover : MonoBehaviour
     private const string HORIZONTAL_AXIS = "Horizontal";
     private const string VERTICAL_AXIS = "Vertical";
 
-    private const int DASH_TIME = 10;
-    private const int DASH_COOLDOWN = 100;
-
-    [SerializeField] private float _speed = 1;
-    [SerializeField] private int _dashCoefficient = 5;
+    [SerializeField] private float _speed;
+    [SerializeField] private int _dashCoefficient;
+    [SerializeField] private float _dashCooldown;
+    [SerializeField] private float _dashTime;
+    [SerializeField] private float _attackCooldown;
 
     private Rigidbody2D _rigB;
-    private int _dashTime;
-    private int _dashCooldown;
-    private int _attackTimer;
-    [SerializeField] private float _attackCooldown;
-    private float _timerAttack;
-
+    private float _dashTimer;
+    private float _attackTimer;
+    private bool _isDash;
     private bool _isAttack;
+
+
 
     private void Start()
     {
         _rigB = GetComponent<Rigidbody2D>();
-        _timerAttack = Time.time;
-
+        _attackTimer = Time.time;
+        _dashTimer = Time.time;
     }
 
 
     private void Update()
     {
-        if (_dashCooldown == 0 && Input.GetKeyDown(KeyCode.Space))
+        if ((Time.time - _dashTimer > _dashCooldown) && Input.GetKeyDown(KeyCode.Space))
         {
-            _dashTime = DASH_TIME;
-            _dashCooldown = DASH_COOLDOWN;
+            _isDash = true;
+            _dashTimer = Time.time;
+        }
+
+        if (Time.time - _dashTimer > _dashTime)
+        {
+            _isDash = false;
         }
 
         if (Input.GetKeyDown(KeyCode.LeftControl))
@@ -46,35 +50,26 @@ public class Player_Mover : MonoBehaviour
     private void FixedUpdate()
     {
         if (!_isAttack)
-        {
             Movement();
-        }
+
         else
-        {
             Attack();
-        }
     }
 
     private void Movement()
     {
         _rigB.linearVelocity = new Vector2(Input.GetAxis(HORIZONTAL_AXIS), Input.GetAxis(VERTICAL_AXIS)) * _speed * SPEED_COEFFICIENT * Time.fixedDeltaTime;
-        if (_dashTime > 0)
-        {
+
+        if (_isDash == true)
             _rigB.linearVelocity *= _dashCoefficient;
-            _dashTime--;
-        }
-        else if (_dashCooldown > 0)
-        {
-            _dashCooldown--;
-        }
     }
 
     private void Attack()
     {
-        if (Time.time - _timerAttack > _attackCooldown)
+        if (Time.time - _attackTimer > _attackCooldown)
         {
             _rigB.linearVelocity = new Vector2(0, 0);
-            _timerAttack = Time.time;
+            _attackTimer = Time.time;
         }
         else
         {
@@ -85,5 +80,10 @@ public class Player_Mover : MonoBehaviour
     public bool GetIsAttack()
     {
         return _isAttack;
+    }
+
+    public bool GetIsDash()
+    {
+        return _isDash;
     }
 }
