@@ -3,46 +3,41 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 public class PlayerAnimatorController : MonoBehaviour
 {
-    private const int DIRECTION_LEFT = 0;
-    private const int DIRECTION_UP = 1;
-    private const int DIRECTION_RIGHT = 2;
-    private const int DIRECTION_DOWN = 3;
+    public const int DIRECTION_LEFT = 0;
+    public const int DIRECTION_UP = 1;
+    public const int DIRECTION_RIGHT = 2;
+    public const int DIRECTION_DOWN = 3;
 
-    private const string HORIZONTAL_AXIS = "Horizontal";
-    private const string VERTICAL_AXIS = "Vertical";
- 
     [SerializeField] private Animator animator;
-    [SerializeField] private Player_Mover _playerMover;
+    [SerializeField] private PlayerAttack _playerAttack;
+    [SerializeField] private PlayerMover _playerMover;
+    [SerializeField] private InputReader _inputReader;
     [SerializeField] private float movementThreshold = 0.1f;
 
     private int currentDirection = DIRECTION_RIGHT;
-    private bool isMoving;
+    private bool _isMoving;
 
     private void Start()
     {
-        animator.SetBool("IsMove", false);
+        _inputReader = GetComponent<InputReader>();
         animator.SetInteger("LastDirection", DIRECTION_RIGHT);
     }
-    private void FixedUpdate()
+    private void Update()
     {
         UpdateAnimationParameters();
     }
 
     private void UpdateAnimationParameters()
     {
-        Vector2 movementInput = new Vector2(
-            Input.GetAxisRaw(HORIZONTAL_AXIS),
-            Input.GetAxisRaw(VERTICAL_AXIS)
-        );
+        Vector2 movementInput = _inputReader.Dirrection;
 
+        _isMoving = movementInput.magnitude > movementThreshold;
+        bool _isAttack = _inputReader.GetIsAttack();
+        bool _isDash = _inputReader.GetIsDash();
 
-        isMoving = movementInput.magnitude > movementThreshold;
-        bool _isAttack = _playerMover.GetIsAttack();
-        bool _isDash = _playerMover.GetIsDash();
+        animator.SetInteger("Action", _isDash ? 3 : _isAttack ? 2 : _isMoving ? 1 : 0);
 
-        animator.SetInteger("Action", _isDash ? 3 : _isAttack ? 2 : isMoving ? 1 : 0);
-
-        if (isMoving)
+        if (_isMoving)
         {
             int newDirection = CalculateDirection(movementInput);
 
