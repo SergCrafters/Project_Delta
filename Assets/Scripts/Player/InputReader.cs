@@ -12,6 +12,7 @@ public class InputReader : MonoBehaviour
     private float _dashTimer;
     private bool _isAttack;
     private bool _isDash;
+    private bool _isInterect;
 
     private void Start()
     {
@@ -44,6 +45,11 @@ public class InputReader : MonoBehaviour
         {
             _isAttack = false;
         }
+
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            _isInterect = true;
+        }
     }
     public bool GetIsAttack()
     {
@@ -53,5 +59,13 @@ public class InputReader : MonoBehaviour
     {
         return _isDash; 
 
+    }
+    public bool GetIsInteract() => GetBoolAsTrigger(ref _isInterect);
+
+    private bool GetBoolAsTrigger(ref bool value)
+    {
+        bool localValue = value;
+        value = false;
+        return localValue;
     }
 }
