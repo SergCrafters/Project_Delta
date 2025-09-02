@@ -10,6 +10,7 @@ public class Player : MonoBehaviour
     private PlayerMover _mover;
     private PlayerAnimatorController _AnimatorController;
     private CollisionHandler _collisionHandler;
+    private Finish _finish;
 
     private IInteractable _interactable;
 
@@ -22,6 +23,7 @@ public class Player : MonoBehaviour
         _mover = GetComponent<PlayerMover>();
         _AnimatorController = GetComponent<PlayerAnimatorController>();
         _collisionHandler = GetComponent<CollisionHandler>();
+        _finish = Object.FindAnyObjectByType<Finish>();
     }
 
     void Update()
@@ -49,6 +51,9 @@ public class Player : MonoBehaviour
 
         if (_inputReader.GetIsInteract() && _interactable != null)
             _interactable.Interact();
+
+        if(_finish._isFinish)
+            gameObject.SetActive(false);
     }
 
 
