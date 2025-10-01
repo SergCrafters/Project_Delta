@@ -1,16 +1,18 @@
 using UnityEngine;
+using static UnityEngine.RuleTile.TilingRuleOutput;
 
-    [RequireComponent(typeof(InputReader), typeof(PlayerAttack), typeof(PlayerMover))]
+    [RequireComponent(typeof(InputReader), typeof(PlayerAttack), typeof(Mover))]
     [RequireComponent(typeof(PlayerAnimatorController), typeof(CollisionHandler))]
 
 public class Player : MonoBehaviour
 {
     private InputReader _inputReader;
     private PlayerAttack _attack;
-    private PlayerMover _mover;
+    private Mover _mover;
     private PlayerAnimatorController _AnimatorController;
     private CollisionHandler _collisionHandler;
     private Finish _finish;
+    public bool _isDash;
 
     private IInteractable _interactable;
 
@@ -20,7 +22,7 @@ public class Player : MonoBehaviour
     {
         _inputReader = GetComponent<InputReader>();
         _attack = GetComponent<PlayerAttack>();
-        _mover = GetComponent<PlayerMover>();
+        _mover = GetComponent<Mover>();
         _AnimatorController = GetComponent<PlayerAnimatorController>();
         _collisionHandler = GetComponent<CollisionHandler>();
         _finish = Object.FindAnyObjectByType<Finish>();
@@ -29,6 +31,7 @@ public class Player : MonoBehaviour
     void Update()
     {
         _isAttack = _inputReader.GetIsAttack();  
+        _isDash = _inputReader.GetIsDash();
     }
 
     private void OnEnable()
@@ -44,7 +47,7 @@ public class Player : MonoBehaviour
     private void FixedUpdate()
     {
         if (!_isAttack)
-            _mover.Movement(_inputReader.Dirrection, _inputReader.GetIsDash());
+            _mover.Move(_inputReader.Dirrection, _inputReader.GetIsDash());
 
         else
             _attack.Attack();
@@ -52,13 +55,24 @@ public class Player : MonoBehaviour
         if (_inputReader.GetIsInteract() && _interactable != null)
             _interactable.Interact();
 
-        if(_finish._isFinish)
-            gameObject.SetActive(false);
+        //if(_finish._isFinish)
+        //    gameObject.SetActive(false);
     }
-
 
     private void OnFinishReached(IInteractable finish)
     {
         _interactable = finish;
+    }
+
+    public void Finish()
+    {
+        Debug.Log("Вы победили");
+        gameObject.SetActive(false);
+    }
+
+    public void GameOver()
+    {
+        Debug.Log("Вы проиграли");
+        gameObject.SetActive(false);
     }
 }

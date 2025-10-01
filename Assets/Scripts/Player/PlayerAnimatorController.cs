@@ -10,7 +10,7 @@ public class PlayerAnimatorController : MonoBehaviour
 
     [SerializeField] private Animator animator;
     [SerializeField] private PlayerAttack _playerAttack;
-    [SerializeField] private PlayerMover _playerMover;
+    [SerializeField] private Mover _playerMover;
     [SerializeField] private InputReader _inputReader;
     [SerializeField] private float movementThreshold = 0.1f;
 
