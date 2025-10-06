@@ -156,6 +156,8 @@ GameObject:
   - component: {fileID: 182010284018329009}
   - component: {fileID: 302945085973167148}
   - component: {fileID: 8901974790849278529}
+  - component: {fileID: 316268966793731160}
+  - component: {fileID: 2194634976694897041}
   m_Layer: 6
   m_Name: Enemy
   m_TagString: Enemy
@@ -294,7 +296,7 @@ MonoBehaviour:
     m_Bits: 128
   _visionAngle: 110
   _visionDistance: 7
-  _visionPivot: {fileID: 0}
+  _visionPivot: {fileID: 1162846292038373508}
 --- !u!114 &8901974790849278529
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -309,3 +311,40 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _arrivalThreshold: 0.5
   _searchRadius: 20
+--- !u!95 &316268966793731160
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2558101516623699124}
+  m_Enabled: 0
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 110091a204b55dd4e8c7bc0f3fb8a8a4, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &2194634976694897041
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2558101516623699124}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a826e77a1005b744bc59f57a9d95d9b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 1053579717576207711}
+  movementThreshold: 0.1
+  currentDirection: 2

@@ -1,14 +1,18 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Mover : MonoBehaviour
 {
     private const float SPEED_COEFFICIENT = 50;
 
+    public Vector2 DirrectionEnemy { get; private set; }
+
     [SerializeField] private float _speed;
     [SerializeField] private float _runSpeed;
     [SerializeField] private int _dashCoefficient;
 
     private Rigidbody2D _rigB;
+
 
     private void Start()
     {
@@ -31,6 +35,7 @@ public class Mover : MonoBehaviour
     private void Move(Transform target, float speed)
     {
         Vector2 newPosition = Vector2.MoveTowards(transform.position, target.position, speed * Time.fixedDeltaTime);
+        DirrectionEnemy = (newPosition - (Vector2)transform.position).normalized;
         _rigB.MovePosition(newPosition);
     }
 

@@ -1,17 +1,15 @@
 using UnityEngine;
-using static UnityEngine.RuleTile.TilingRuleOutput;
 
     [RequireComponent(typeof(InputReader), typeof(PlayerAttack), typeof(Mover))]
-    [RequireComponent(typeof(PlayerAnimatorController), typeof(CollisionHandler))]
+    [RequireComponent(typeof(AnimatorController), typeof(CollisionHandler))]
 
 public class Player : MonoBehaviour
 {
     private InputReader _inputReader;
     private PlayerAttack _attack;
     private Mover _mover;
-    private PlayerAnimatorController _AnimatorController;
+    private AnimatorController _AnimatorController;
     private CollisionHandler _collisionHandler;
-    private Finish _finish;
     public bool _isDash;
 
     private IInteractable _interactable;
@@ -23,15 +21,16 @@ public class Player : MonoBehaviour
         _inputReader = GetComponent<InputReader>();
         _attack = GetComponent<PlayerAttack>();
         _mover = GetComponent<Mover>();
-        _AnimatorController = GetComponent<PlayerAnimatorController>();
+        _AnimatorController = GetComponent<AnimatorController>();
         _collisionHandler = GetComponent<CollisionHandler>();
-        _finish = Object.FindAnyObjectByType<Finish>();
     }
 
     void Update()
     {
         _isAttack = _inputReader.GetIsAttack();  
         _isDash = _inputReader.GetIsDash();
+
+        _AnimatorController.UpdateAnimationParameters(_inputReader.Dirrection,_isAttack, _isDash);
     }
 
     private void OnEnable()
@@ -54,9 +53,6 @@ public class Player : MonoBehaviour
 
         if (_inputReader.GetIsInteract() && _interactable != null)
             _interactable.Interact();
-
-        //if(_finish._isFinish)
-        //    gameObject.SetActive(false);
     }
 
     private void OnFinishReached(IInteractable finish)
