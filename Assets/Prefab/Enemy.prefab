@@ -263,6 +263,7 @@ MonoBehaviour:
   _wayPoints: []
   _speedX: 3
   _maxSqrDistance: 0.1
+  _sqrAttackDistance: 2
   _waitTime: 2
 --- !u!114 &182010284018329009
 MonoBehaviour:

@@ -6,6 +6,10 @@ class ReturnedTransition : Transition
 
         public override bool IsNeedTransit() => _backToPoint.IsReturned();
 
-        public override void Transit() => StateMachine.ChacgeState<IdleState>();
+    public override void Transit()
+    {
+        base.Transit();
+        StateMachine.ChacgeState<IdleState>();
     }
+}
 

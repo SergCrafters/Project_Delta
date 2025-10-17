@@ -27,6 +27,10 @@ class LostTargetTransition : Transition
         return false;
     }
 
-    public override void Transit() => StateMachine.ChacgeState<ReturnState>();
+    public override void Transit()
+    {
+        base.Transit();
+        StateMachine.ChacgeState<ReturnState>();
     }
+}
 

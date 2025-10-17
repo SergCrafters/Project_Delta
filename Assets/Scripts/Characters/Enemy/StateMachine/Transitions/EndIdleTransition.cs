@@ -6,6 +6,10 @@ class EndIdleTransition : Transition
 
         public override bool IsNeedTransit() => _idleState.IsEndWait;
 
-        public override void Transit() => StateMachine.ChacgeState<PatrolState>();
+    public override void Transit()
+    {
+        base.Transit();
+        StateMachine.ChacgeState<PatrolState>();
     }
+}
 

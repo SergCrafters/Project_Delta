@@ -1,25 +1,53 @@
 using UnityEngine;
 
-class TargetReachedTransition : Transition
+class ReachedTransition : Transition
     {
-        private PatrolState _patrolState;
+        private IMoveState _moveState;
         private Transform _transform;
         private float _maxSqrDistance;
 
-        public TargetReachedTransition(StateMachine stateMachine, PatrolState patrolState, float maxSqrDistance, Transform transform) : base(stateMachine)
+        public ReachedTransition(StateMachine stateMachine, IMoveState moveState, float maxSqrDistance, Transform transform) : base(stateMachine)
         {
             _transform = transform;
-            _patrolState = patrolState;
+            _moveState = moveState;
             _maxSqrDistance = maxSqrDistance;
         }
 
         public override bool IsNeedTransit()
         {
-            float sqeDistance = (_transform.position - _patrolState.Target.position).sqrMagnitude;
+            float sqeDistance = (_transform.position - _moveState.Target.position).sqrMagnitude;
 
             return sqeDistance < _maxSqrDistance;
         }
+}
 
-        public override void Transit() => StateMachine.ChacgeState<IdleState>();
+class TargetReachedTransition : ReachedTransition
+{
+    public TargetReachedTransition(StateMachine stateMachine, IMoveState moveState, float attackDistance, Transform transform) :
+                base(stateMachine, moveState, attackDistance, transform)
+
+    {
     }
+
+    public override void Transit()
+    {
+        base.Transit();
+        StateMachine.ChacgeState<AttackState>();
+    }
+}
+
+class WayPointReachedTransition : ReachedTransition
+{
+    public WayPointReachedTransition(StateMachine stateMachine, IMoveState moveState, float maxSqrDistance, Transform transform) :
+                base(stateMachine, moveState, maxSqrDistance, transform)
+    {
+
+    }
+
+    public override void Transit()
+    {
+        base.Transit();
+        StateMachine.ChacgeState<IdleState>();
+    }
+}
 

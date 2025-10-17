@@ -1,4 +1,5 @@
 using UnityEngine;
+using static UnityEngine.Rendering.DebugUI;
 
 public class InputReader : MonoBehaviour
 {
@@ -35,26 +36,15 @@ public class InputReader : MonoBehaviour
             _isDash = false;
         }
 
-        if ((Time.time - _attackTimer > _attackCooldown) && Input.GetKeyDown(KeyCode.LeftControl))
-        {
+        if (Input.GetKeyDown(KeyCode.LeftControl))
             _isAttack = true;
-            _attackTimer = Time.time;
-        }
-
-        else
-        {
-            _isAttack = false;
-        }
 
         if (Input.GetKeyDown(KeyCode.F))
         {
             _isInterect = true;
         }
     }
-    public bool GetIsAttack()
-    {
-        return _isAttack;
-    }
+    public bool GetIsAttack() => GetBoolAsTrigger(ref _isAttack);
     public bool GetIsDash()
     {
         return _isDash; 

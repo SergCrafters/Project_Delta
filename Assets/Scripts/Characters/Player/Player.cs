@@ -1,12 +1,12 @@
 using UnityEngine;
 
-    [RequireComponent(typeof(InputReader), typeof(PlayerAttack), typeof(Mover))]
+    [RequireComponent(typeof(InputReader), typeof(PlayerAttacker), typeof(Mover))]
     [RequireComponent(typeof(AnimatorController), typeof(CollisionHandler))]
 
 public class Player : MonoBehaviour
 {
     private InputReader _inputReader;
-    private PlayerAttack _attack;
+    private PlayerAttacker _attacker;
     private Mover _mover;
     private AnimatorController _AnimatorController;
     private CollisionHandler _collisionHandler;
@@ -15,11 +15,12 @@ public class Player : MonoBehaviour
     private IInteractable _interactable;
 
     private bool _isAttack;
+    private Vector2 _lastDirection;
 
     private void Awake()
     {
         _inputReader = GetComponent<InputReader>();
-        _attack = GetComponent<PlayerAttack>();
+        _attacker = GetComponent<PlayerAttacker>();
         _mover = GetComponent<Mover>();
         _AnimatorController = GetComponent<AnimatorController>();
         _collisionHandler = GetComponent<CollisionHandler>();
@@ -27,8 +28,13 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        _isAttack = _inputReader.GetIsAttack();  
+        //_isAttack = _inputReader.GetIsAttack();  
         _isDash = _inputReader.GetIsDash();
+
+        if (_inputReader.Dirrection != Vector2.zero)
+        {
+            _lastDirection = _inputReader.Dirrection.normalized;
+        }
 
         _AnimatorController.UpdateAnimationParameters(_inputReader.Dirrection,_isAttack, _isDash);
     }
@@ -45,11 +51,17 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!_isAttack)
-            _mover.Move(_inputReader.Dirrection, _inputReader.GetIsDash());
 
-        else
-            _attack.Attack();
+        if (_inputReader.Dirrection != null)
+        {
+            _mover.Move(_inputReader.Dirrection, _inputReader.GetIsDash());
+        }
+
+        if (_inputReader.GetIsAttack())
+        {
+                _attacker.Attack(_lastDirection);
+                //_AnimatorController.UpdateAnimationParameters(_inputReader.Dirrection, _isAttack = true, _isDash);
+        }
 
         if (_inputReader.GetIsInteract() && _interactable != null)
             _interactable.Interact();
@@ -71,4 +83,5 @@ public class Player : MonoBehaviour
         Debug.Log("Вы проиграли");
         gameObject.SetActive(false);
     }
+
 }

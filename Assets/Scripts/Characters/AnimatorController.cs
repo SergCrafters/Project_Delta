@@ -18,6 +18,7 @@ public class AnimatorController : MonoBehaviour
     {
         animator.SetInteger("Action", isDash ? 3 : isAttack ? 2 : _isMoving ? 1 : 0);
 
+
         UpdateDirection(movementInput);
     }
 
@@ -43,6 +44,7 @@ public class AnimatorController : MonoBehaviour
             }
         }
     }
+
 
     private int CalculateDirection(Vector2 input)
     {
