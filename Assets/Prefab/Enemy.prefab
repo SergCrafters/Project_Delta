@@ -158,6 +158,7 @@ GameObject:
   - component: {fileID: 8901974790849278529}
   - component: {fileID: 316268966793731160}
   - component: {fileID: 2194634976694897041}
+  - component: {fileID: 420189992676755442}
   m_Layer: 6
   m_Name: Enemy
   m_TagString: Enemy
@@ -257,6 +258,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33ee556cc04f8604086a38050cca210b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _maxHealth: 90
   _waypointLayer:
     serializedVersion: 2
     m_Bits: 512
@@ -349,3 +351,15 @@ MonoBehaviour:
   animator: {fileID: 1053579717576207711}
   movementThreshold: 0.1
   currentDirection: 2
+--- !u!114 &420189992676755442
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2558101516623699124}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32c8ae4bf999b164db077f5ae6008619, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

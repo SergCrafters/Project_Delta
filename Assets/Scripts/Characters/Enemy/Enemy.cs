@@ -4,6 +4,7 @@ using UnityEngine;
 [RequireComponent(typeof(AnimatorController), typeof(EnemyAttacker))]
 public class Enemy : MonoBehaviour
 {
+    [SerializeField] private int _maxHealth;
     [SerializeField] private LayerMask _waypointLayer;
     [SerializeField] private WayPoint[] _wayPoints;
     [SerializeField] private float _speedX = 1;
@@ -11,7 +12,13 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float _sqrAttackDistance = 1f;
     [SerializeField] private float _waitTime = 2f;
 
+    private Health _health;
     private EnemyStateMachine _stateMachine;
+
+    private void Awake()
+    {
+        _health = new Health(_maxHealth);
+    }
 
     private void Start()
     {
@@ -27,6 +34,15 @@ public class Enemy : MonoBehaviour
     private void FixedUpdate()
     {
         _stateMachine.Update();
+    }
+
+    public void ApplyDamage(int damage)
+    {
+        _health.ApplyDamage(damage);
+        print(_health.Value);
+
+        if (_health.Value == 0)
+            Destroy(gameObject);
     }
 }
 

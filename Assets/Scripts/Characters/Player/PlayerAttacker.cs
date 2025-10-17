@@ -29,7 +29,7 @@ public class PlayerAttacker : MonoBehaviour
             if (hit != null && hit.TryGetComponent(out Enemy enemy))
             {
                 print("попадание");
-                //enemy.ApplyDamage(_damage);
+                enemy.ApplyDamage(_damage);
             }
         }
     }

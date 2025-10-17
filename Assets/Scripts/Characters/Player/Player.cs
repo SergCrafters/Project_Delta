@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    [SerializeField] private int _maxHealth;
+
+    private Health _health;
     private InputReader _inputReader;
     private PlayerAttacker _attacker;
     private Mover _mover;
@@ -19,6 +22,7 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
+        _health = new Health(_maxHealth);
         _inputReader = GetComponent<InputReader>();
         _attacker = GetComponent<PlayerAttacker>();
         _mover = GetComponent<Mover>();
@@ -65,6 +69,15 @@ public class Player : MonoBehaviour
 
         if (_inputReader.GetIsInteract() && _interactable != null)
             _interactable.Interact();
+    }
+
+    public void ApplyDamage(int damage)
+    {
+        _health.ApplyDamage(damage);
+        print(_health.Value);
+
+        if (_health.Value == 0)
+            Destroy(gameObject);
     }
 
     private void OnFinishReached(IInteractable finish)
