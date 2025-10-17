@@ -74,7 +74,7 @@ public class EnemyVision : MonoBehaviour
         }
     }
 
-    private Vector2 GetVisionDirection()
+    public Vector2 GetVisionDirection()
     {
         float angleRad = _currentVisionAngle * Mathf.Deg2Rad;
         return new Vector2(Mathf.Cos(angleRad), Mathf.Sin(angleRad));

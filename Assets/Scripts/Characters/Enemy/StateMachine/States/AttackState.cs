@@ -10,6 +10,11 @@ class AttackState : State
     private LostTargetTransition _lostTargetTransition;
     private Transform _target;
 
+    private float _endWaitTime;
+    private float _delay = 3;
+
+    private bool CanAttack => _endWaitTime <= Time.time;
+
     public AttackState(StateMachine stateMachine, EnemyAttacker attacker, AnimatorController animator, EnemyVision vision, float tryFindTime, LayerMask waypointLayer, float sqrAttackDistance) : base(stateMachine)
     {
         _attacker = attacker;
@@ -31,6 +36,7 @@ class AttackState : State
     public override void Enter(State previousState)
     {
         _vision.TrySeeTarget(out _target, _waypointLayer);
+        _endWaitTime = Time.time;
         //_vision.LookAtTarget(_target.position);
         //_lostTargetTransition.IsNeedTransit();
     }
@@ -41,6 +47,15 @@ class AttackState : State
         {
             _vision.LookAtTarget(_target.position);
         }
+
+        if (CanAttack)
+        {
+            _attacker.SetAttackDirection(_vision.GetVisionDirection());
+            _attacker.Attack();
+            _endWaitTime = Time.time + _delay;
+        }
+
+
         //Debug.Log("Акатую");
         //if (_attacker.IsAttack == false)
         //    _fliper.LookAtTarget(_target.position);

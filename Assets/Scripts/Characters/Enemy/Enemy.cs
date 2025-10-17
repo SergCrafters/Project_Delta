@@ -1,3 +1,4 @@
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 [RequireComponent(typeof(Mover), typeof(EnemyVision), typeof(BackToPoint))]
@@ -13,22 +14,26 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float _waitTime = 2f;
 
     private Health _health;
+    private EnemyVision _vision;
+    private EnemyAttacker _attacker;
     private EnemyStateMachine _stateMachine;
 
     private void Awake()
     {
         _health = new Health(_maxHealth);
+        _vision = GetComponent<EnemyVision>();
+        _attacker = GetComponent<EnemyAttacker>();
     }
 
     private void Start()
     {
         var mover = GetComponent<Mover>();
-        var vision = GetComponent<EnemyVision>();
+        //var vision = GetComponent<EnemyVision>();
         var animatorController = GetComponent<AnimatorController>();
         var backToPoint = GetComponent<BackToPoint>();
-        var attacker = GetComponent<EnemyAttacker>();
+        //var attacker = GetComponent<EnemyAttacker>();
 
-        _stateMachine = new EnemyStateMachine(mover, vision, animatorController, backToPoint, attacker, _waypointLayer, _wayPoints, _maxSqrDistance, transform, _waitTime, _sqrAttackDistance);
+        _stateMachine = new EnemyStateMachine(mover, _vision, animatorController, backToPoint, _attacker, _waypointLayer, _wayPoints, _maxSqrDistance, transform, _waitTime, _sqrAttackDistance);
     }
 
     private void FixedUpdate()
@@ -43,6 +48,10 @@ public class Enemy : MonoBehaviour
 
         if (_health.Value == 0)
             Destroy(gameObject);
+    }
+    public void UpdateAttackDirection()
+    {
+        _attacker.SetAttackDirection(_vision.GetVisionDirection());
     }
 }
 
