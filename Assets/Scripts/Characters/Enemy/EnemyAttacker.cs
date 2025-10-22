@@ -9,7 +9,7 @@ public class EnemyAttacker : MonoBehaviour
     [SerializeField] private LayerMask _targetLayer;
 
     private float _endWaitTime;
-    private Vector2 _attackDirection = Vector2.right; // направление по умолчанию
+    private Vector2 _attackDirection = Vector2.right;
 
     public float Delay => _delay;
     public bool CanAttack => _endWaitTime <= Time.time;
@@ -32,11 +32,7 @@ public class EnemyAttacker : MonoBehaviour
         }
     }
 
-    // Enemy передает направление взгляда
-    public void SetAttackDirection(Vector2 direction)
-    {
-        _attackDirection = direction.normalized;
-    }
+    public void SetAttackDirection(Vector2 direction) => _attackDirection = direction.normalized;
 
     public void StartAttack()
     {
@@ -44,13 +40,7 @@ public class EnemyAttacker : MonoBehaviour
         _endWaitTime = Time.time + _delay;
     }
 
-    public void OnAttackEnded()
-    {
-        IsAttack = false;
-    }
+    public void OnAttackEnded() => IsAttack = false;
 
-    private Vector2 GetAttackOrigin()
-    {
-        return (Vector2)transform.position + _attackDirection * _offsetDistance;
-    }
+    private Vector2 GetAttackOrigin() => (Vector2)transform.position + _attackDirection * _offsetDistance;
 }

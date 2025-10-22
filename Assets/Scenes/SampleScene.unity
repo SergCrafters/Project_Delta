@@ -306,7 +306,7 @@ Transform:
   m_GameObject: {fileID: 22689622}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 7.6899896, y: 0.35999727, z: 0}
+  m_LocalPosition: {x: 13.529989, y: 0.35999727, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -479,6 +479,7 @@ GameObject:
   - component: {fileID: 128677285}
   - component: {fileID: 128677284}
   - component: {fileID: 128677283}
+  - component: {fileID: 128677286}
   m_Layer: 0
   m_Name: PlayerAnimator
   m_TagString: Untagged
@@ -578,6 +579,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2090991706}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &128677286
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 128677282}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ca7dca6bdc45ef47bd501b5731f6ef7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &139979169
 GameObject:
   m_ObjectHideFlags: 0
@@ -5342,7 +5355,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 7.6899896, y: 0.35999727, z: 0}
+  m_LocalPosition: {x: 13.529989, y: 0.35999727, z: 0}
   m_LocalScale: {x: 0.98232, y: 1.2147027, z: 0.98231995}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -33745,7 +33758,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &825747679
 Transform:
   m_ObjectHideFlags: 0
@@ -41228,7 +41241,7 @@ Transform:
   m_GameObject: {fileID: 2090991702}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.12, y: 0.47, z: -0.14973}
+  m_LocalPosition: {x: 8.96, y: 0.47, z: -0.14973}
   m_LocalScale: {x: 0.98232, y: 1.2147027, z: 0.59086543}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -41348,6 +41361,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxHealth: 100
+  _animationEvent: {fileID: 128677286}
   _isDash: 0
 --- !u!114 &2090991715
 MonoBehaviour:
@@ -41388,14 +41402,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba80296bee4326a49bccd23e827f6d47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canAttack: 1
+  _lastAttackDirection: {x: 0, y: -1}
+  canAction: 1
   _radius: 1
   _damage: 30
   _offsetDistance: 0.7
   _targetLayer:
     serializedVersion: 2
     m_Bits: 64
-  _lastAttackDirection: {x: 0, y: -1}
 --- !u!1 &2115968348
 GameObject:
   m_ObjectHideFlags: 0
@@ -41574,26 +41588,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 485012671}
     m_Modifications:
-    - target: {fileID: 302945085973167148, guid: 50319357179bae44da8251d7fa2ac6ac, type: 3}
-      propertyPath: _visionDistance
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 420189992676755442, guid: 50319357179bae44da8251d7fa2ac6ac, type: 3}
-      propertyPath: _damage
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 420189992676755442, guid: 50319357179bae44da8251d7fa2ac6ac, type: 3}
-      propertyPath: _radius
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 420189992676755442, guid: 50319357179bae44da8251d7fa2ac6ac, type: 3}
-      propertyPath: _offsetDistance
-      value: 0.7
-      objectReference: {fileID: 0}
-    - target: {fileID: 420189992676755442, guid: 50319357179bae44da8251d7fa2ac6ac, type: 3}
-      propertyPath: _targetLayer.m_Bits
-      value: 128
-      objectReference: {fileID: 0}
     - target: {fileID: 2331003152823289451, guid: 50319357179bae44da8251d7fa2ac6ac, type: 3}
       propertyPath: _wayPoints.Array.size
       value: 4
@@ -41621,10 +41615,6 @@ PrefabInstance:
     - target: {fileID: 2558101516623699124, guid: 50319357179bae44da8251d7fa2ac6ac, type: 3}
       propertyPath: m_IsActive
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4249365450367203147, guid: 50319357179bae44da8251d7fa2ac6ac, type: 3}
-      propertyPath: m_Mass
-      value: 10000
       objectReference: {fileID: 0}
     - target: {fileID: 6173142767453068722, guid: 50319357179bae44da8251d7fa2ac6ac, type: 3}
       propertyPath: animator

@@ -5,13 +5,16 @@ class IdleState : State
     private float _endWaitTime;
     private float _waitTime;
     private AnimatorController _animatorController;
-    private Mover _mover;
+    private EnemyVision _vision;
+
 
     public IdleState(StateMachine stateMachine, Mover mover, EnemyVision vision, AnimatorController animatorController, LayerMask waypointLayer, float waitTime, float sqrAttackDistance) : base(stateMachine)
     {
         _waitTime = waitTime;
-        _mover = mover;
         _animatorController = animatorController;
+        _vision = vision;
+
+
 
         Transitions = new Transition[]
         {
@@ -24,13 +27,12 @@ class IdleState : State
 
     public override void Enter(State previousState)
     {
-        //Debug.Log("јжидаим");
         _endWaitTime = Time.time + _waitTime;
     }
 
     public override void Update()
     {
-        _animatorController.UpdateAnimationParametersEnemy(_mover.DirrectionEnemy);
+        _animatorController.UpdateAnimationParametersEnemy(_vision.GetVisionDirection());
     }
 }
 

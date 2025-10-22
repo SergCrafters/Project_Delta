@@ -1,11 +1,12 @@
 using UnityEngine;
 
-    [RequireComponent(typeof(InputReader), typeof(PlayerAttacker), typeof(Mover))]
-    [RequireComponent(typeof(AnimatorController), typeof(CollisionHandler))]
+[RequireComponent(typeof(InputReader), typeof(PlayerAttacker), typeof(Mover))]
+[RequireComponent(typeof(AnimatorController), typeof(CollisionHandler))]
 
 public class Player : MonoBehaviour
 {
     [SerializeField] private int _maxHealth;
+    [SerializeField] AnimationEvent _animationEvent;
 
     private Health _health;
     private InputReader _inputReader;
@@ -29,10 +30,28 @@ public class Player : MonoBehaviour
         _AnimatorController = GetComponent<AnimatorController>();
         _collisionHandler = GetComponent<CollisionHandler>();
     }
+    private void OnEnable()
+    {
+        //_health.TakingDamage += OnTakingDamage;
+        _collisionHandler.FinishReached += OnFinishReached;
+        _animationEvent.DealingDamage += _attacker.Attack;
+        _animationEvent.AttackStarted += _attacker.OnCanAttack;
+        _animationEvent.AttackEnded += _attacker.OnCanAttack;
+        _collisionHandler.FinishReached += OnFinishReached;
+    }
+
+    private void OnDisable()
+    {
+        //_health.TakingDamage -= OnTakingDamage;
+        _collisionHandler.FinishReached -= OnFinishReached;
+        _animationEvent.DealingDamage -= _attacker.Attack;
+        _animationEvent.AttackStarted -= _attacker.OnCanAttack;
+        _animationEvent.AttackEnded -= _attacker.OnCanAttack;
+        _collisionHandler.FinishReached -= OnFinishReached;
+    }
 
     void Update()
     {
-        //_isAttack = _inputReader.GetIsAttack();  
         _isDash = _inputReader.GetIsDash();
 
         if (_inputReader.Dirrection != Vector2.zero)
@@ -40,32 +59,27 @@ public class Player : MonoBehaviour
             _lastDirection = _inputReader.Dirrection.normalized;
         }
 
-        _AnimatorController.UpdateAnimationParameters(_inputReader.Dirrection,_isAttack, _isDash);
-    }
-
-    private void OnEnable()
-    {
-        _collisionHandler.FinishReached += OnFinishReached;
-    }
-
-    private void OnDisable()
-    {
-        _collisionHandler.FinishReached -= OnFinishReached;
+        _AnimatorController.UpdateAnimationParameters(_inputReader.Dirrection, _isAttack = false, _isDash);
     }
 
     private void FixedUpdate()
     {
-
-        if (_inputReader.Dirrection != null)
+        if (_attacker.canAction)
         {
-            _mover.Move(_inputReader.Dirrection, _inputReader.GetIsDash());
+            if (_inputReader.Dirrection != null)
+            {
+                _mover.Move(_inputReader.Dirrection, _inputReader.GetIsDash());
+            }
+
+            if (_inputReader.GetIsAttack())
+            {
+                _attacker.UpdateAttackZone(_lastDirection);
+                _AnimatorController.UpdateAnimationParameters(_inputReader.Dirrection, _isAttack = true, _isDash);
+            }
         }
 
-        if (_inputReader.GetIsAttack())
-        {
-                _attacker.Attack(_lastDirection);
-                //_AnimatorController.UpdateAnimationParameters(_inputReader.Dirrection, _isAttack = true, _isDash);
-        }
+        else
+            _mover.Move(Vector2.zero, _inputReader.GetIsDash());
 
         if (_inputReader.GetIsInteract() && _interactable != null)
             _interactable.Interact();
@@ -80,10 +94,7 @@ public class Player : MonoBehaviour
             Destroy(gameObject);
     }
 
-    private void OnFinishReached(IInteractable finish)
-    {
-        _interactable = finish;
-    }
+    private void OnFinishReached(IInteractable finish) => _interactable = finish;
 
     public void Finish()
     {

@@ -28,8 +28,6 @@ class FollowState : State, IMoveState
     public override void Enter(State previousState)
     {
         _vision.TrySeeTarget(out _target, _waypointLayer);
-        //
-
     }
 
     public override void Update()
@@ -39,7 +37,6 @@ class FollowState : State, IMoveState
             _mover.Run(_target);
             _vision.LookAtTarget(_target.position);
         }
-        //
         _animatorController.UpdateAnimationParametersEnemy(_mover.DirrectionEnemy, isRun: true);
     }
 }

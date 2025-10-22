@@ -12,28 +12,32 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float _maxSqrDistance = 0.1f;
     [SerializeField] private float _sqrAttackDistance = 1f;
     [SerializeField] private float _waitTime = 2f;
+    [SerializeField] AnimationEvent _animationEvent;
 
     private Health _health;
     private EnemyVision _vision;
     private EnemyAttacker _attacker;
+    private AnimatorController _animatorController;
     private EnemyStateMachine _stateMachine;
+    private Mover _mover;
 
     private void Awake()
     {
         _health = new Health(_maxHealth);
         _vision = GetComponent<EnemyVision>();
         _attacker = GetComponent<EnemyAttacker>();
+        _animatorController = GetComponent<AnimatorController>();
+        _animationEvent.DealingDamage += _attacker.Attack;
+        _animationEvent.AttackEnded += _attacker.OnAttackEnded;
+        _health.TakingDamage += OnTakingDamage;
+        _mover = GetComponent<Mover>();
     }
 
     private void Start()
     {
-        var mover = GetComponent<Mover>();
-        //var vision = GetComponent<EnemyVision>();
-        var animatorController = GetComponent<AnimatorController>();
         var backToPoint = GetComponent<BackToPoint>();
-        //var attacker = GetComponent<EnemyAttacker>();
 
-        _stateMachine = new EnemyStateMachine(mover, _vision, animatorController, backToPoint, _attacker, _waypointLayer, _wayPoints, _maxSqrDistance, transform, _waitTime, _sqrAttackDistance);
+        _stateMachine = new EnemyStateMachine(_mover, _vision, _animatorController, backToPoint, _attacker, _waypointLayer, _wayPoints, _maxSqrDistance, transform, _waitTime, _sqrAttackDistance);
     }
 
     private void FixedUpdate()
@@ -49,9 +53,21 @@ public class Enemy : MonoBehaviour
         if (_health.Value == 0)
             Destroy(gameObject);
     }
-    public void UpdateAttackDirection()
+
+    private void OnDestroy()
     {
-        _attacker.SetAttackDirection(_vision.GetVisionDirection());
+        _animationEvent.DealingDamage -= _attacker.Attack;
+        _animationEvent.AttackEnded -= _attacker.OnAttackEnded;
+        _health.TakingDamage -= OnTakingDamage;
+    }
+
+    private void OnTakingDamage()
+    {
+        _animatorController.UpdateAnimationParametersEnemy(_mover.DirrectionEnemy, isHit: true);
+
+        //if (_vision.TrySeeTarget(out Transform _target, _waypointLayer) == false)
+        //    _vision.LookAtTarget(_target.position);
+
     }
 }
 
