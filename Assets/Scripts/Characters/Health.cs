@@ -8,7 +8,9 @@ public class Health
         Value = maxValue;
     }
 
+    public event Action<float, float> ValueChanged;
     public event Action TakingDamage;
+    public event Action Died;
 
     public int MaxValue { get; private set; }
 
@@ -21,6 +23,9 @@ public class Health
         ChangeValue(-damage);
 
         TakingDamage?.Invoke();
+
+        if (Value == 0)
+            Died?.Invoke();
     }
 
     public void Heal(int value)
@@ -33,6 +38,7 @@ public class Health
     private void ChangeValue(int value)
     {
         Value = Mathf.Clamp(Value + value, 0, MaxValue);
+        ValueChanged?.Invoke(Value, MaxValue);
     }
 
 }

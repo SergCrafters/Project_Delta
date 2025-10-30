@@ -1,14 +1,13 @@
+using System;
 using UnityEngine;
 
 [RequireComponent(typeof(InputReader), typeof(PlayerAttacker), typeof(Mover))]
 [RequireComponent(typeof(AnimatorController), typeof(CollisionHandler))]
 
-public class Player : MonoBehaviour
+public class Player : Character
 {
-    [SerializeField] private int _maxHealth;
     [SerializeField] AnimationEvent _animationEvent;
 
-    private Health _health;
     private InputReader _inputReader;
     private PlayerAttacker _attacker;
     private Mover _mover;
@@ -21,33 +20,39 @@ public class Player : MonoBehaviour
     private bool _isAttack;
     private Vector2 _lastDirection;
 
-    private void Awake()
+
+    protected override void Awake()
     {
-        _health = new Health(_maxHealth);
+        base.Awake();
+
         _inputReader = GetComponent<InputReader>();
         _attacker = GetComponent<PlayerAttacker>();
         _mover = GetComponent<Mover>();
         _AnimatorController = GetComponent<AnimatorController>();
         _collisionHandler = GetComponent<CollisionHandler>();
     }
-    private void OnEnable()
+    protected override void OnEnable()
     {
-        //_health.TakingDamage += OnTakingDamage;
+        base.OnEnable();
+
         _collisionHandler.FinishReached += OnFinishReached;
         _animationEvent.DealingDamage += _attacker.Attack;
         _animationEvent.AttackStarted += _attacker.OnCanAttack;
         _animationEvent.AttackEnded += _attacker.OnCanAttack;
         _collisionHandler.FinishReached += OnFinishReached;
+
     }
 
-    private void OnDisable()
+    protected override void OnDisable()
     {
-        //_health.TakingDamage -= OnTakingDamage;
+        base.OnDisable();
+
         _collisionHandler.FinishReached -= OnFinishReached;
         _animationEvent.DealingDamage -= _attacker.Attack;
         _animationEvent.AttackStarted -= _attacker.OnCanAttack;
         _animationEvent.AttackEnded -= _attacker.OnCanAttack;
         _collisionHandler.FinishReached -= OnFinishReached;
+
     }
 
     void Update()
@@ -85,15 +90,6 @@ public class Player : MonoBehaviour
             _interactable.Interact();
     }
 
-    public void ApplyDamage(int damage)
-    {
-        _health.ApplyDamage(damage);
-        print(_health.Value);
-
-        if (_health.Value == 0)
-            Destroy(gameObject);
-    }
-
     private void OnFinishReached(IInteractable finish) => _interactable = finish;
 
     public void Finish()
@@ -106,6 +102,13 @@ public class Player : MonoBehaviour
     {
         Debug.Log("¬ы проиграли");
         gameObject.SetActive(false);
+    }
+
+    protected override void OnTakingDamage()
+    {
+        ///расскомментировать, когда довавитс€ анимаци€ получени€ урона игрока
+        //if (_attacker.canAction == false)
+        //    _attacker.OnCanAttack();
     }
 
 }
