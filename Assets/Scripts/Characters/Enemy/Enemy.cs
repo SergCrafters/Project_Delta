@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Mover), typeof(EnemyVision), typeof(BackToPoint))]
-[RequireComponent(typeof(AnimatorController), typeof(EnemyAttacker))]
+[RequireComponent(typeof(AnimatorController), typeof(EnemyAttacker), typeof(EnemySound))]
 public class Enemy : Character
 {
     [SerializeField] private LayerMask _waypointLayer;
@@ -14,6 +14,7 @@ public class Enemy : Character
 
     private EnemyVision _vision;
     private EnemyAttacker _attacker;
+    private EnemySound _sound;
     private AnimatorController _animatorController;
     private EnemyStateMachine _stateMachine;
     private Mover _mover;
@@ -24,6 +25,7 @@ public class Enemy : Character
 
         _vision = GetComponent<EnemyVision>();
         _attacker = GetComponent<EnemyAttacker>();
+        _sound = GetComponent<EnemySound>();
         _animatorController = GetComponent<AnimatorController>();
         _animationEvent.DealingDamage += _attacker.Attack;
         _animationEvent.AttackEnded += _attacker.OnAttackEnded;
@@ -34,7 +36,7 @@ public class Enemy : Character
     {
         var backToPoint = GetComponent<BackToPoint>();
 
-        _stateMachine = new EnemyStateMachine(_mover, _vision, _animatorController, backToPoint, _attacker, _waypointLayer, _wayPoints, _maxSqrDistance, transform, _waitTime, _sqrAttackDistance);
+        _stateMachine = new EnemyStateMachine(_mover, _vision, _animatorController, backToPoint, _attacker, _sound, _waypointLayer, _wayPoints, _maxSqrDistance, transform, _waitTime, _sqrAttackDistance);
     }
 
     private void FixedUpdate()
@@ -51,6 +53,7 @@ public class Enemy : Character
     protected override void OnTakingDamage()
     {
         _animatorController.UpdateAnimationParametersEnemy(_mover.DirrectionEnemy, isHit: true);
+        _sound.PlayHitSound();
 
         /// требует доработки, когда игрок бьет со спины, враг должен поворачиваться
         //if (_vision.TrySeeTarget(out Transform _target, _waypointLayer) == false)
@@ -60,6 +63,7 @@ public class Enemy : Character
 
     protected override void OnDied()
     {
+        _sound.PlayDeathSound();
         Destroy(gameObject);
     }
 }

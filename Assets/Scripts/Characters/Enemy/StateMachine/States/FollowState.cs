@@ -2,16 +2,18 @@ using UnityEngine;
 
 class FollowState : State, IMoveState
 {
-    private EnemyVision _vision;
     private LayerMask _waypointLayer;
     private Mover _mover;
+    private EnemyVision _vision;
+    private EnemySound _sound;
     private Transform _target;
     private AnimatorController _animatorController;
 
-    public FollowState(StateMachine stateMachine, EnemyVision vision, AnimatorController animatorController, Mover mover, LayerMask waypointLayer, float sqrAttackDistance) : base(stateMachine)
+    public FollowState(StateMachine stateMachine, EnemyVision vision, EnemySound sound, AnimatorController animatorController, Mover mover, LayerMask waypointLayer, float sqrAttackDistance) : base(stateMachine)
     {
         _mover = mover;
         _vision = vision;
+        _sound = sound;
         _waypointLayer = waypointLayer;
         _animatorController = animatorController;
 
@@ -36,6 +38,7 @@ class FollowState : State, IMoveState
         {
             _mover.Run(_target);
             _vision.LookAtTarget(_target.position);
+            _sound.PlayRunSound();
         }
         _animatorController.UpdateAnimationParametersEnemy(_mover.DirrectionEnemy, isRun: true);
     }

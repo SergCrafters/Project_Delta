@@ -172,6 +172,7 @@ GameObject:
   - component: {fileID: 316268966793731160}
   - component: {fileID: 2194634976694897041}
   - component: {fileID: 420189992676755442}
+  - component: {fileID: 9072691126861342052}
   m_Layer: 6
   m_Name: Enemy
   m_TagString: Enemy
@@ -386,6 +387,24 @@ MonoBehaviour:
   _targetLayer:
     serializedVersion: 2
     m_Bits: 128
+--- !u!114 &9072691126861342052
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2558101516623699124}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebe18bd99b1624e41bbec8036dbfac40, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _audioManager: {fileID: 0}
+  _stepSound: {fileID: 8300000, guid: b133a2e735b4ad4428097f1141914fb6, type: 3}
+  _runSound: {fileID: 8300000, guid: 7dac2658bf7dc8d429a1997fbfc29b7d, type: 3}
+  _hitSound: {fileID: 8300000, guid: 53fe67253e8c45441aff86ed8180b20c, type: 3}
+  _attackSound: {fileID: 8300000, guid: 4bb456ad1c8a9fc4593ec851372b1c6a, type: 3}
+  _deathSound: {fileID: 8300000, guid: 05486060ebec2544cb76147a6d0d1cf6, type: 3}
 --- !u!1001 &21788762497423337
 PrefabInstance:
   m_ObjectHideFlags: 0
