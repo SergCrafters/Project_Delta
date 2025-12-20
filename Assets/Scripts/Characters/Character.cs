@@ -6,36 +6,36 @@ public abstract class Character : MonoBehaviour
     [SerializeField] private int _maxHealth;
     [SerializeField] private HealthBar _healthBar;
 
-    private Health _health;
-
     public event Action Died;
+
+    protected Health Health { get; private set; }
 
     protected virtual void Awake()
     {
-        _health = new Health(_maxHealth);
-        _healthBar.Initialize(_health);
+        Health = new Health(_maxHealth);
+        _healthBar.Initialize(Health);
     }
 
     protected virtual void OnEnable()
     {
-        _health.TakingDamage += OnTakingDamage;
-        _health.Died += OnDied;
+        Health.TakingDamage += OnTakingDamage;
+        Health.Died += OnDied;
     }
 
     protected virtual void OnDisable()
     {
-        _health.TakingDamage -= OnTakingDamage;
-        _health.Died -= OnDied;
+        Health.TakingDamage -= OnTakingDamage;
+        Health.Died -= OnDied;
     }
 
     public void ApplyDamage(int damage)
     {
-        _health.ApplyDamage(damage);
+        Health.ApplyDamage(damage);
     }
 
     public void Heal(int value)
     {
-        _health.Heal(value);
+        Health.Heal(value);
     }
 
     protected virtual void OnDied()

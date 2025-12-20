@@ -3,13 +3,12 @@ using UnityEngine;
 
 public class EnemyVision : MonoBehaviour
 {
-    [Header("Vision Settings")]
     [SerializeField] private LayerMask _targetLayer;
+    [SerializeField] private LayerMask _intaractLayer;
 
     [SerializeField] private float _visionAngle = 90f;
     [SerializeField] private float _visionDistance = 5f;
 
-    [Header("References")]
     [SerializeField] private Transform _visionPivot;
 
 
@@ -45,7 +44,7 @@ public class EnemyVision : MonoBehaviour
 
             if (angleToTarget < _visionAngle / 2f)
             {
-                LayerMask raycastMask = ~((1 << gameObject.layer) | waypointLayer);
+                LayerMask raycastMask = ~((1 << gameObject.layer) | waypointLayer | _intaractLayer);
                 RaycastHit2D hit2D = Physics2D.Raycast(transform.position, directionToTarget, _visionDistance, raycastMask);
 
                 if (hit2D.collider != null && hit2D.collider == hit)

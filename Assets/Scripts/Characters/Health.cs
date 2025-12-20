@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 public class Health
 {
+
     public Health(int maxValue)
     {
         MaxValue = maxValue;

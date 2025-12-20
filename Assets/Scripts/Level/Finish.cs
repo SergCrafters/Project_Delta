@@ -1,26 +1,22 @@
+using System;
 using System.Linq;
 using UnityEngine;
 
-public class Finish : MonoBehaviour, IInteractable
+public class Finish : Interactable
 {
     [SerializeField] private Switch[] _switches;
 
-    public bool _isFinish = false;
-    private Player _player;
+    public event Action Activated;
 
-    private void OnTriggerEnter2D(Collider2D other)
+    public override void Interact()
     {
-        if (other.CompareTag("Player"))
-        {
-            _player = other.GetComponent<Player>();
-        }
-    }
-    public void Interact()
-    {
+        if (_isLock)
+            return;
+
         if (_switches.All(i => i.IsActive))
         {
-            _isFinish = true;
-            _player.Finish();
+            Activated?.Invoke();
         }
+
     }
 }

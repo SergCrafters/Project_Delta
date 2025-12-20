@@ -9,7 +9,8 @@ public class HealthBar : MonoBehaviour
 
     private void OnDestroy()
     {
-        _health.ValueChanged -= OnValueChanged;
+        if (_health != null)
+            _health.ValueChanged -= OnValueChanged;
     }
 
     public void Initialize(Health health)

@@ -12,16 +12,24 @@ public class EnemySound : MonoBehaviour
 
     private float _nextPlayStepTime;
     private float _nextPlayRunTime;
+    private Transform _transform;
 
+
+    private void Awake()
+    {
+        _transform = transform;
+    }
 
     public void PlayStepSound()
     {
-        _nextPlayStepTime = PlayTimedPitchSound(_stepSound, _nextPlayStepTime);
+        if (_audioManager.CanBeHeard(_transform.position))
+            _nextPlayStepTime = PlayTimedPitchSound(_stepSound, _nextPlayStepTime);
     }
 
     public void PlayRunSound()
     {
-        _nextPlayRunTime = PlayTimedPitchSound(_stepSound, _nextPlayRunTime);
+        if (_audioManager.CanBeHeard(_transform.position))
+            _nextPlayRunTime = PlayTimedPitchSound(_stepSound, _nextPlayRunTime);
     }
 
     public void PlayHitSound() => _audioManager.PlaySound(_hitSound);

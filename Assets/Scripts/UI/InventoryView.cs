@@ -1,0 +1,31 @@
+using System.Collections.Generic;
+using UnityEngine;
+
+public class InventoryView : MonoBehaviour
+{
+    [SerializeField] private InventoryItemView _itemPrefab;
+
+    private List<InventoryItemView> _items = new();
+
+
+    public void Add(IItem item)
+    {
+        InventoryItemView itemView = Instantiate(_itemPrefab, transform);
+        itemView.initialize(item);
+        _items.Add(itemView);
+    }
+
+    public void Remove(IItem item)
+    {
+        foreach (InventoryItemView itemView in _items)
+        {
+            if (itemView.Item == item)
+            {
+                Destroy(itemView.gameObject);
+                _items.Remove(itemView);
+                return;
+            }
+        }
+    }
+}
+

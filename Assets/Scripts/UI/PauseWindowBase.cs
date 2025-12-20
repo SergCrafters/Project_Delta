@@ -35,7 +35,7 @@ public class PauseWindowBase : MonoBehaviour
         LoadScene(MAIN_MANU_SCENE_INDEX);
     }
 
-    private void LoadScene(int index)
+    protected void LoadScene(int index)
     {
         SceneManager.LoadScene(index);
     }

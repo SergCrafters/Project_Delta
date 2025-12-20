@@ -314,6 +314,9 @@ MonoBehaviour:
   _targetLayer:
     serializedVersion: 2
     m_Bits: 128
+  _intaractLayer:
+    serializedVersion: 2
+    m_Bits: 1024
   _visionAngle: 110
   _visionDistance: 7
   _visionPivot: {fileID: 1162846292038373508}
