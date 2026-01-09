@@ -10,7 +10,7 @@ public class Enemy : Character
     [SerializeField] private float _maxSqrDistance = 0.1f;
     [SerializeField] private float _sqrAttackDistance = 1f;
     [SerializeField] private float _waitTime = 2f;
-    [SerializeField] AnimationEvent _animationEvent;
+    [SerializeField] private AnimationEvent _animationEvent;
 
     private EnemyVision _vision;
     private EnemyAttacker _attacker;

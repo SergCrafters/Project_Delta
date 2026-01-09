@@ -66,7 +66,8 @@ class PatrolState : State, IMoveState
         for (int i = 0; i < _wayPoints.Length; i++)
         {
 
-            float distance = Vector3.Distance(_mover.transform.position, _wayPoints[i].transform.position);
+            //float distance = Vector3.Distance(_mover.transform.position, _wayPoints[i].transform.position);
+            float distance = Vector3.SqrMagnitude(_wayPoints[i].transform.position);
             if (distance < minDistance)
             {
                 minDistance = distance;

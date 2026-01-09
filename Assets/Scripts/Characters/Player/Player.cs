@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class Player : Character
 {
-    [SerializeField] AnimationEvent _animationEvent;
+    [SerializeField] private AnimationEvent _animationEvent;
     [SerializeField] private Canvas _interactableCanvas;
     [SerializeField] private InventoryView _inventoryView;
 
@@ -74,7 +74,7 @@ public class Player : Character
         _inventory.itemRemoved -= _inventoryView.Remove;
     }
 
-    void Update()
+    private void Update()
     {
         _isDash = _inputReader.GetIsDash();
 
