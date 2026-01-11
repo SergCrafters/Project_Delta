@@ -143,4 +143,28 @@ public class BackToPoint : MonoBehaviour
             }
         }
     }
+
+    public int FindIndexClosestWayPoint(WayPoint[]  wayPoints, int wayPointIndex, Transform target)
+    {
+
+        float minDistance = float.MaxValue;
+        int closestIndex = 0;
+
+        for (int i = 0; i < wayPoints.Length; i++)
+        {
+
+            float distance = Vector3.SqrMagnitude(wayPoints[i].transform.position);
+            if (distance < minDistance)
+            {
+                minDistance = distance;
+                closestIndex = i;
+            }
+        }
+
+        return wayPointIndex = GetNextWayPoint(wayPoints, closestIndex);
+    }
+
+    public int ChangeTarget(WayPoint[] wayPoints, int wayPointIndex, Transform target) => wayPointIndex = GetNextWayPoint(wayPoints, wayPointIndex);
+
+    private int GetNextWayPoint(WayPoint[] wayPoints, int wayPointIndex) => wayPointIndex = ++wayPointIndex % wayPoints.Length;
 }

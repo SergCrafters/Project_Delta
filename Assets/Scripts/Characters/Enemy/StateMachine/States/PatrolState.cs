@@ -5,16 +5,18 @@ class PatrolState : State, IMoveState
     private WayPoint[] _wayPoints;
     private Mover _mover;
     private EnemyVision _vision;
+    private BackToPoint _backToPoint;
     private EnemySound _sound;
     private AnimatorController _animatorController;
     private Transform _target;
     private int _wayPointIndex;
 
-    public PatrolState(StateMachine stateMachine, Mover mover, EnemyVision vision, EnemySound sound, AnimatorController animatorController, LayerMask waypointLayer, WayPoint[] wayPoints,
+    public PatrolState(StateMachine stateMachine, Mover mover, EnemyVision vision, BackToPoint backToPoint ,EnemySound sound, AnimatorController animatorController, LayerMask waypointLayer, WayPoint[] wayPoints,
                             float maxSqrDistance, Transform transform, float sqrAttackDistance) : base(stateMachine)
     {
         _mover = mover;
         _vision = vision;
+        _backToPoint = backToPoint;
         _sound = sound;
         _wayPoints = wayPoints;
         _animatorController = animatorController;
@@ -31,10 +33,13 @@ class PatrolState : State, IMoveState
     public override void Enter(State previousState)
     {
         if (_wayPointIndex == -1)
-            FindClosestWayPoint();
-
+        {
+            _wayPointIndex = _backToPoint.FindIndexClosestWayPoint(_wayPoints, _wayPointIndex, _target);
+            _target = _wayPoints[_wayPointIndex].transform;
+        }
         else
-            ChangeTarget();
+            _wayPointIndex = _backToPoint.ChangeTarget(_wayPoints, _wayPointIndex, _target);
+            _target = _wayPoints[_wayPointIndex].transform;
     }
 
     public override void Exit(State nextState)
@@ -49,34 +54,6 @@ class PatrolState : State, IMoveState
         _vision.LookAtTarget(_target.position);
         _animatorController.UpdateAnimationParametersEnemy(_mover.DirrectionEnemy, isWalk: true);
         _sound.PlayStepSound();
-    }
-
-    private void ChangeTarget()
-    {
-        _wayPointIndex = ++_wayPointIndex % _wayPoints.Length;
-        _target = _wayPoints[_wayPointIndex].transform;
-    }
-
-    private void FindClosestWayPoint()
-    {
-
-        float minDistance = float.MaxValue;
-        int closestIndex = 0;
-
-        for (int i = 0; i < _wayPoints.Length; i++)
-        {
-
-            //float distance = Vector3.Distance(_mover.transform.position, _wayPoints[i].transform.position);
-            float distance = Vector3.SqrMagnitude(_wayPoints[i].transform.position);
-            if (distance < minDistance)
-            {
-                minDistance = distance;
-                closestIndex = i;
-            }
-        }
-
-        _wayPointIndex = ++closestIndex % _wayPoints.Length;
-        _target = _wayPoints[_wayPointIndex].transform;
     }
 }
 
