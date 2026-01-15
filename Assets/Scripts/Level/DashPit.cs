@@ -4,7 +4,10 @@ public class DashPit : MonoBehaviour
 {
     [SerializeField] private Collider2D _pitCollider;
     [SerializeField] private bool _isPlayerInPit = false;
-    private Player _player;
+    [SerializeField] private int _fallDamage = 10;
+
+    private Dash _dash;
+
 
     private void Start()
     {
@@ -12,24 +15,27 @@ public class DashPit : MonoBehaviour
         _pitCollider.isTrigger = true;
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (other.CompareTag("Player"))
+        if (collision.TryGetComponent(out Dash dash) && dash.GetIsDash())
         {
-            _player = other.GetComponent<Player>();
             _isPlayerInPit = true;
-
-            if (_player != null && !_player._isDash)
-                _player.GameOver();
+            _dash = dash;
         }
-
-        if (other.CompareTag("Enemy"))
+        else
+        {
             _pitCollider.isTrigger = false;
+        }
     }
 
-    private void OnTriggerExit2D(Collider2D other)
+    private void OnCollisionExit2D(Collision2D collision)
     {
-        if (other.CompareTag("Player"))
+        _pitCollider.isTrigger = true;
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.TryGetComponent(out Dash dash))
         {
             _isPlayerInPit = false;
             _pitCollider.isTrigger = true;
@@ -38,16 +44,13 @@ public class DashPit : MonoBehaviour
 
     private void Update()
     {
-        if (_isPlayerInPit && _player != null && !_player._isDash)
-            _player.GameOver();
-       
+        print(_isPlayerInPit);
 
-        if (_player != null && !_player._isDash && _pitCollider.isTrigger)
+        if (_isPlayerInPit && _dash != null && !_dash.GetIsDash())
+        {
+            _dash.ReturnToSafeZone(_fallDamage);
             _isPlayerInPit = false;
+        }
     }
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Enemy"))
-            _pitCollider.isTrigger = true;
-    }
+
 }

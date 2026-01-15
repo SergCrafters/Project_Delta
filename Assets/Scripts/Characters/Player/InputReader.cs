@@ -14,10 +14,11 @@ public class InputReader : MonoBehaviour
     private bool _isAttack;
     private bool _isDash;
     private bool _isInterect;
+    private bool _dashTap;
 
     private void Start()
     {
-        _dashTimer = Time.time;
+        //_dashTimer = Time.time;
         _attackTimer = Time.time;
     }
 
@@ -25,15 +26,14 @@ public class InputReader : MonoBehaviour
     {
         Dirrection = new Vector2(Input.GetAxis(ConstantData.InpudData.HORIZONTAL_AXIS), Input.GetAxis(ConstantData.InpudData.VERTICAL_AXIS));
 
-        if ((Time.time - _dashTimer > _dashCooldown) && Input.GetKeyDown(KeyCode.Space))
+        //if ((Time.time - _dashTimer > _dashCooldown) && Input.GetKeyDown(KeyCode.Space))
+        //{
+        //    _isDash = true;
+        //    _dashTimer = Time.time;
+        //}
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            _isDash = true;
-            _dashTimer = Time.time;
-        }
-
-        if (Time.time - _dashTimer > _dashTime)
-        {
-            _isDash = false;
+            _dashTap = true;
         }
 
         if (Input.GetKeyDown(KeyCode.LeftControl))
@@ -45,11 +45,18 @@ public class InputReader : MonoBehaviour
         }
     }
     public bool GetIsAttack() => GetBoolAsTrigger(ref _isAttack);
-    public bool GetIsDash()
+    //public bool GetIsDash()
+    //{
+    //    return _isDash; 
+
+    //}
+
+    public bool GetIsDashTap()
     {
-        return _isDash; 
+        return GetBoolAsTrigger(ref _dashTap); 
 
     }
+
     public bool GetIsInteract() => GetBoolAsTrigger(ref _isInterect);
 
     private bool GetBoolAsTrigger(ref bool value)

@@ -3,6 +3,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(InputReader), typeof(PlayerAttacker), typeof(Mover))]
 [RequireComponent(typeof(AnimatorController), typeof(CollisionHandler), typeof(PlayerSound))]
+[RequireComponent(typeof(Dash))]
 
 public class Player : Character
 {
@@ -14,6 +15,7 @@ public class Player : Character
     private PlayerAttacker _attacker;
     private PlayerSound _sound;
     private Mover _mover;
+    private Dash _dash;
     private AnimatorController _AnimatorController;
     private CollisionHandler _collisionHandler;
     public bool _isDash;
@@ -33,6 +35,7 @@ public class Player : Character
         _inputReader = GetComponent<InputReader>();
         _attacker = GetComponent<PlayerAttacker>();
         _mover = GetComponent<Mover>();
+        _dash = GetComponent<Dash>();
         _AnimatorController = GetComponent<AnimatorController>();
         _collisionHandler = GetComponent<CollisionHandler>();
         _sound = GetComponent<PlayerSound>();
@@ -50,12 +53,13 @@ public class Player : Character
         _animationEvent.DealingDamage += _attacker.Attack;
         _animationEvent.AttackStarted += _attacker.OnCanAttack;
         _animationEvent.AttackEnded += _attacker.OnCanAttack;
-
         _animationEvent.DashStart += _sound.PlayDashSound;
 
 
         _inventory.itemAdded += AddItemToInventory;
         _inventory.itemRemoved += _inventoryView.Remove;
+
+        _dash.Return += ApplyDamage;
     }
 
     protected override void OnDisable()
@@ -65,6 +69,7 @@ public class Player : Character
         _collisionHandler.InteractableFounded -= OnInteractableFounded;
         _collisionHandler.MedKitFounded -= OnMedKitFounded;
         _collisionHandler.KeyFounded -= OnKeyFounded;
+
         _animationEvent.DealingDamage -= _attacker.Attack;
         _animationEvent.AttackStarted -= _attacker.OnCanAttack;
         _animationEvent.AttackEnded -= _attacker.OnCanAttack;
@@ -72,11 +77,14 @@ public class Player : Character
 
         _inventory.itemAdded -= AddItemToInventory;
         _inventory.itemRemoved -= _inventoryView.Remove;
+        
+        _dash.Return -= ApplyDamage;
     }
 
     private void Update()
     {
-        _isDash = _inputReader.GetIsDash();
+        _dash.DashTap(_inputReader.GetIsDashTap());
+        _isDash = _dash.GetIsDash();
 
         if (_inputReader.Dirrection != Vector2.zero)
         {
@@ -92,9 +100,9 @@ public class Player : Character
         {
             if (_inputReader.Dirrection != null && _inputReader.Dirrection != Vector2.zero)
             {
-                _mover.Move(_inputReader.Dirrection, _inputReader.GetIsDash());
+                _mover.Move(_inputReader.Dirrection, _dash.GetIsDash());
 
-                if (!_inputReader.GetIsDash())
+                if (!_dash.GetIsDash())
                     _sound.PlayStepSound();
             }
 
@@ -107,12 +115,12 @@ public class Player : Character
 
             if (_inputReader.Dirrection == Vector2.zero)
             {
-                _mover.Move(Vector2.zero, _inputReader.GetIsDash());
+                _mover.Move(Vector2.zero, _dash.GetIsDash());
             }
         }
 
         else
-            _mover.Move(Vector2.zero, _inputReader.GetIsDash());
+            _mover.Move(Vector2.zero, _dash.GetIsDash());
 
         if (_inputReader.GetIsInteract() && _interactable != null)
         {
@@ -129,12 +137,6 @@ public class Player : Character
                 _interactableCanvas.gameObject.SetActive(false);
             }
         }
-    }
-
-    public void GameOver()
-    {
-        Debug.Log("Вы проиграли");
-        gameObject.SetActive(false);
     }
 
     protected override void OnTakingDamage()
