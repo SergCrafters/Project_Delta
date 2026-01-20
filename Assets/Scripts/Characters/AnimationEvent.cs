@@ -7,6 +7,7 @@ public class AnimationEvent : MonoBehaviour
     public event Action AttackStarted;
     public event Action AttackEnded;
     public event Action DashStart;
+    public event Action Death;
 
     public void InvokeDealingDamageEvent() => DealingDamage?.Invoke();
 
@@ -15,5 +16,7 @@ public class AnimationEvent : MonoBehaviour
     public void InvokeAttackEndedEvent() => AttackEnded?.Invoke();
 
     public void InvokeDashStartEvent() => DashStart?.Invoke();
+
+    public void InvokeDeathEvent() => Death?.Invoke();
 
 }

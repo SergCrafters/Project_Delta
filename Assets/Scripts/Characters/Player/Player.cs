@@ -1,9 +1,10 @@
 using System;
+using NUnit.Framework;
 using UnityEngine;
 
 [RequireComponent(typeof(InputReader), typeof(PlayerAttacker), typeof(Mover))]
 [RequireComponent(typeof(AnimatorController), typeof(CollisionHandler), typeof(PlayerSound))]
-[RequireComponent(typeof(Dash))]
+[RequireComponent(typeof(Dash), typeof(Noiser))]
 
 public class Player : Character
 {
@@ -16,6 +17,7 @@ public class Player : Character
     private PlayerSound _sound;
     private Mover _mover;
     private Dash _dash;
+    private Noiser _noiser;
     private AnimatorController _AnimatorController;
     private CollisionHandler _collisionHandler;
     public bool _isDash;
@@ -36,6 +38,7 @@ public class Player : Character
         _attacker = GetComponent<PlayerAttacker>();
         _mover = GetComponent<Mover>();
         _dash = GetComponent<Dash>();
+        _noiser = GetComponent<Noiser>();
         _AnimatorController = GetComponent<AnimatorController>();
         _collisionHandler = GetComponent<CollisionHandler>();
         _sound = GetComponent<PlayerSound>();
@@ -91,7 +94,7 @@ public class Player : Character
             _lastDirection = _inputReader.Dirrection.normalized;
         }
 
-        _AnimatorController.UpdateAnimationParameters(_inputReader.Dirrection, _isAttack = false, _isDash);
+        _AnimatorController.UpdateAnimationParameters(_inputReader.Dirrection, _isDash, _isAttack = false);
     }
 
     private void FixedUpdate()
@@ -101,6 +104,7 @@ public class Player : Character
             if (_inputReader.Dirrection != null && _inputReader.Dirrection != Vector2.zero)
             {
                 _mover.Move(_inputReader.Dirrection, _dash.GetIsDash());
+                _noiser.CreateNoise();
 
                 if (!_dash.GetIsDash())
                     _sound.PlayStepSound();
@@ -109,8 +113,9 @@ public class Player : Character
             if (_inputReader.GetIsAttack())
             {
                 _attacker.UpdateAttackZone(_lastDirection);
+                _noiser.CreateNoise();
                 _sound.PlayAttackSound();
-                _AnimatorController.UpdateAnimationParameters(_inputReader.Dirrection, _isAttack = true, _isDash);
+                _AnimatorController.UpdateAnimationParameters(_inputReader.Dirrection, _isDash, _isAttack = true);
             }
 
             if (_inputReader.Dirrection == Vector2.zero)
@@ -142,10 +147,10 @@ public class Player : Character
     protected override void OnTakingDamage()
     {
         _sound.PlayHitSound();
+        _AnimatorController.UpdateAnimationParameters(_inputReader.Dirrection, _isDash, isHit : true);
 
-        ///расскомментировать, когда довавится анимация получения урона игрока
-        //if (_attacker.canAction == false)
-        //    _attacker.OnCanAttack();
+        if (_attacker.canAction == false)
+            _attacker.OnCanAttack();
     }
 
     protected override void OnDied()

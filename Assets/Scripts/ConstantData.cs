@@ -14,6 +14,7 @@ public static class ConstantData
         public static readonly int IsOff = Animator.StringToHash(nameof(IsOff));
         public static readonly int IsAttack = Animator.StringToHash(nameof(IsAttack));
         public static readonly int IsHit = Animator.StringToHash(nameof(IsHit));
+        public static readonly int IsDeath = Animator.StringToHash(nameof(IsDeath));
     }
 
     public static class DirectionData

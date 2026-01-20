@@ -29,6 +29,7 @@ public class Enemy : Character
         _animatorController = GetComponent<AnimatorController>();
         _animationEvent.DealingDamage += _attacker.Attack;
         _animationEvent.AttackEnded += _attacker.OnAttackEnded;
+        _animationEvent.Death += Destroy;
         _mover = GetComponent<Mover>();
     }
 
@@ -54,16 +55,24 @@ public class Enemy : Character
     {
         _animatorController.UpdateAnimationParametersEnemy(_mover.DirrectionEnemy, isHit: true);
         _sound.PlayHitSound();
+    }
 
-        /// требует доработки, когда игрок бьет со спины, враг должен поворачиваться
-        //if (_vision.TrySeeTarget(out Transform _target, _waypointLayer) == false)
-        //    _vision.LookAtTarget(_target.position);
-
+    public void Hear(Vector3 target)
+    {
+        if (_vision.TrySeeTarget(out Transform _target, _waypointLayer) == false)
+            _vision.LookAtTarget(target);
     }
 
     protected override void OnDied()
     {
         _sound.PlayDeathSound();
+        _mover.isDontMoving = true;
+        _animatorController.UpdateAnimationParametersEnemy(_mover.DirrectionEnemy, isDeath: true);
+
+    }
+
+    private void Destroy()
+    {
         Destroy(gameObject);
     }
 }

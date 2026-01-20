@@ -7,6 +7,8 @@ public class Mover : MonoBehaviour
 
     public Vector2 DirrectionEnemy { get; private set; }
 
+    public bool isDontMoving = false;
+
     [SerializeField] private float _speed;
     [SerializeField] private float _runSpeed;
     [SerializeField] private int _dashCoefficient;
@@ -34,9 +36,12 @@ public class Mover : MonoBehaviour
 
     private void Move(Transform target, float speed)
     {
-        Vector2 newPosition = Vector2.MoveTowards(transform.position, target.position, speed * Time.fixedDeltaTime);
-        DirrectionEnemy = (newPosition - (Vector2)transform.position).normalized;
-        _rigB.MovePosition(newPosition);
+        if (!isDontMoving)
+        {
+            Vector2 newPosition = Vector2.MoveTowards(transform.position, target.position, speed * Time.fixedDeltaTime);
+            DirrectionEnemy = (newPosition - (Vector2)transform.position).normalized;
+            _rigB.MovePosition(newPosition);
+        }
     }
 
 }

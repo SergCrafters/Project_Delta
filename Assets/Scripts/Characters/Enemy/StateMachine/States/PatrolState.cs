@@ -3,6 +3,7 @@ using UnityEngine;
 class PatrolState : State, IMoveState
 {
     private WayPoint[] _wayPoints;
+    private LayerMask _waypointLayer;
     private Mover _mover;
     private EnemyVision _vision;
     private BackToPoint _backToPoint;
@@ -19,6 +20,7 @@ class PatrolState : State, IMoveState
         _backToPoint = backToPoint;
         _sound = sound;
         _wayPoints = wayPoints;
+        _waypointLayer = waypointLayer;
         _animatorController = animatorController;
 
         Transitions = new Transition[]
@@ -51,7 +53,7 @@ class PatrolState : State, IMoveState
     public override void Update()
     {
         _mover.Walk(_target);
-        _vision.LookAtTarget(_target.position);
+        _vision.UpdateLook(_target, _waypointLayer);
         _animatorController.UpdateAnimationParametersEnemy(_mover.DirrectionEnemy, isWalk: true);
         _sound.PlayStepSound();
     }

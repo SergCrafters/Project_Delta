@@ -113,6 +113,8 @@ GameObject:
   - component: {fileID: 6179988378939005033}
   - component: {fileID: 2812791611541447085}
   - component: {fileID: 2989898686975763605}
+  - component: {fileID: 8161534897209050189}
+  - component: {fileID: 1993881702873274818}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -129,8 +131,8 @@ Transform:
   m_GameObject: {fileID: 1420737685401197406}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 17.41, y: 6.97, z: -0.14973}
-  m_LocalScale: {x: 0.98232, y: 1.2147027, z: 0.59086543}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7585229741897079730}
@@ -362,6 +364,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 186d19240aaac834cb3ba14c5759920b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isDontMoving: 0
   _speed: 5
   _runSpeed: 11
   _dashCoefficient: 3
@@ -403,6 +406,34 @@ MonoBehaviour:
   _attackSound: {fileID: 8300000, guid: a1d5bd0f3233fb04f91922a546453120, type: 3}
   _dashSound: {fileID: 8300000, guid: 201c5cac76d029445b38d76172d024b9, type: 3}
   _deathSound: {fileID: 8300000, guid: 9090b7f4675a32e40b3de4cfead991cf, type: 3}
+--- !u!114 &8161534897209050189
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1420737685401197406}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6710448b5563e6b4da80ec0a3899890b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _dashCooldown: 1
+  _dashTime: 0.2
+--- !u!114 &1993881702873274818
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1420737685401197406}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22cb1af4abe51f4479e961ea777a7893, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  noiseRadius: 4
+  noiseDuration: 1
 --- !u!1 &5811369704025562948
 GameObject:
   m_ObjectHideFlags: 0

@@ -50,7 +50,12 @@ public class EnemyVision : MonoBehaviour
                 if (hit2D.collider != null && hit2D.collider == hit)
                 {
                     target = hit2D.transform;
+                    Debug.DrawLine(transform.position, hit2D.point, Color.red);
                     return true;
+                }
+                else
+                {
+                    Debug.DrawLine(transform.position, hit2D.point, Color.white);
                 }
             }
         }
@@ -61,7 +66,8 @@ public class EnemyVision : MonoBehaviour
     {
         Vector3 direction = (targetPosition - transform.position).normalized;
         float targetAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        _currentVisionAngle = Mathf.LerpAngle(_currentVisionAngle, targetAngle, 10f * Time.fixedDeltaTime);
+        //_currentVisionAngle = Mathf.LerpAngle(_currentVisionAngle, targetAngle, 10f * Time.fixedDeltaTime);
+        _currentVisionAngle = targetAngle;
         UpdateVisionRotation();
     }
 
@@ -71,6 +77,18 @@ public class EnemyVision : MonoBehaviour
         {
             _visionPivot.rotation = Quaternion.Euler(0f, 0f, _currentVisionAngle);
         }
+    }
+
+    public void UpdateLook(Transform patrolTarget, LayerMask waypointLayer)
+    {
+        Vector3 targetToLook = patrolTarget.position;
+
+        if (TrySeeTarget(out Transform player, waypointLayer))
+        {
+            targetToLook = player.position;
+        }
+
+        LookAtTarget(targetToLook);
     }
 
     public Vector2 GetVisionDirection()

@@ -14,7 +14,7 @@ public class AnimatorController : MonoBehaviour
         animator.SetInteger("LastDirection", currentDirection);
     }
 
-    public void UpdateAnimationParameters(Vector2 movementInput, bool isAttack, bool isDash)
+    public void UpdateAnimationParameters(Vector2 movementInput, bool isDash, bool isAttack = false, bool isHit = false)
     {
         animator.SetInteger("Action", isDash ? 3  : _isMoving ? 1 : 0);
         //animator.SetInteger("Action", isDash ? 3 : isAttack ? 2 : _isMoving ? 1 : 0);
@@ -24,10 +24,15 @@ public class AnimatorController : MonoBehaviour
             animator.SetTrigger(ConstantData.AnimatorParameters.IsAttack);
         }
 
+        if (isHit)
+        {
+            animator.SetTrigger(ConstantData.AnimatorParameters.IsHit);
+        }
         UpdateDirection(movementInput);
     }
 
-    public void UpdateAnimationParametersEnemy(Vector2 movementInput, bool isRun = false, bool isWalk = false, bool isAttack = false, bool isHit = false)
+    public void UpdateAnimationParametersEnemy(Vector2 movementInput, bool isRun = false, 
+                bool isWalk = false, bool isAttack = false, bool isHit = false, bool isDeath = false)
     {
         animator.SetInteger("Action", isRun ? 2 : isWalk ? 1 : 0);
 
@@ -39,6 +44,11 @@ public class AnimatorController : MonoBehaviour
         if (isHit)
         {
             animator.SetTrigger(ConstantData.AnimatorParameters.IsHit);
+        }
+
+        if (isDeath)
+        {
+            animator.SetTrigger(ConstantData.AnimatorParameters.IsDeath);
         }
 
         UpdateDirection(movementInput);
