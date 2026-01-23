@@ -135,6 +135,10 @@ public class Player : Character
                 {
                     _interactable.Unlock((Key)_inventory.Take(_interactable.Key));
                 }
+                else
+                {
+                    _interactable.Interact();
+                }
             }
             else
             {
