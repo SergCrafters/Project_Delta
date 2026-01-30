@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SettingWindow : MonoBehaviour
+public class SettingsWindow : MonoBehaviour
 {
 
     [SerializeField] private AudioManager _audioManager;
