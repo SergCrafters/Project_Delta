@@ -44255,6 +44255,10 @@ PrefabInstance:
       propertyPath: _key
       value: 
       objectReference: {fileID: 1352466989}
+    - target: {fileID: 6869499692342724873, guid: 639516769fbf7ce40adb84d0121f40ca, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7228972539130316901, guid: 639516769fbf7ce40adb84d0121f40ca, type: 3}
       propertyPath: m_LocalPosition.x
       value: 13.55
