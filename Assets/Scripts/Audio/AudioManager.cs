@@ -17,6 +17,7 @@ public class AudioManager : MonoBehaviour
 
     private Transform _listenerTransform;
 
+
     private void Awake()
     {
         _listenerTransform = _listener.transform;
@@ -32,10 +33,7 @@ public class AudioManager : MonoBehaviour
 
     public float Get_sqrMaxDistanceToSource() => _sqrMaxDistanceToSource;
 
-    public bool CanBeHeard(Vector3 sourcePosition)
-    {
-        return (sourcePosition - _listenerTransform.position).sqrMagnitude < _sqrMaxDistanceToSource;
-    }
+    public bool CanBeHeard(Vector3 sourcePosition) => (sourcePosition - _listenerTransform.position).sqrMagnitude < _sqrMaxDistanceToSource;
 
     public void PlayMusic(AudioClip clip)
     {
@@ -57,17 +55,29 @@ public class AudioManager : MonoBehaviour
 
     public void RefreshSettings()
     {
-        _musicSource.mute = PlayerPrefs.GetInt(ConstantData.SaveData.MUSIC_MUTE_KEY, ConstantData.SaveData.IS_ON_VALUE) != ConstantData.SaveData.IS_ON_VALUE;
+        _musicSource.mute = SaveService.MusicIsOn == false;
 
-        _soundSource.mute = PlayerPrefs.GetInt(ConstantData.SaveData.SOUND_MUTE_KEY, ConstantData.SaveData.IS_ON_VALUE) != ConstantData.SaveData.IS_ON_VALUE;
-        _randomPitchSoundSource.mute = PlayerPrefs.GetInt(ConstantData.SaveData.SOUND_MUTE_KEY, ConstantData.SaveData.IS_ON_VALUE) != ConstantData.SaveData.IS_ON_VALUE;
+        _soundSource.mute = SaveService.SoundIsOn == false;
+        _randomPitchSoundSource.mute = SaveService.SoundIsOn == false;
 
 
-        _musicSource.volume = PlayerPrefs.GetFloat(ConstantData.SaveData.MUSIC_KEY, ConstantData.SaveData.DEFAULT_VALUME);
+        _musicSource.volume = SaveService.MusicVolume;
 
-        _soundSource.volume = PlayerPrefs.GetFloat(ConstantData.SaveData.SOUND_KEY, ConstantData.SaveData.DEFAULT_VALUME);
-        _randomPitchSoundSource.volume = PlayerPrefs.GetFloat(ConstantData.SaveData.SOUND_KEY, (ConstantData.SaveData.DEFAULT_VALUME * ConstantData.SaveData.FOOTSTEP_VOLUME_SCALE));
-        _randomPitchSoundSource.volume *= ConstantData.SaveData.FOOTSTEP_VOLUME_SCALE;
+        _soundSource.volume = SaveService.SoundVolume;
+        _randomPitchSoundSource.volume = SaveService.SoundVolume * ConstantData.SaveData.FOOTSTEP_VOLUME_SCALE;
     }
 
 }
+
+
+//_musicSource.mute = PlayerPrefs.GetInt(ConstantData.SaveData.MUSIC_MUTE_KEY, ConstantData.SaveData.IS_ON_VALUE) != ConstantData.SaveData.IS_ON_VALUE;
+
+//_soundSource.mute = PlayerPrefs.GetInt(ConstantData.SaveData.SOUND_MUTE_KEY, ConstantData.SaveData.IS_ON_VALUE) != ConstantData.SaveData.IS_ON_VALUE;
+//_randomPitchSoundSource.mute = PlayerPrefs.GetInt(ConstantData.SaveData.SOUND_MUTE_KEY, ConstantData.SaveData.IS_ON_VALUE) != ConstantData.SaveData.IS_ON_VALUE;
+
+
+//_musicSource.volume = PlayerPrefs.GetFloat(ConstantData.SaveData.MUSIC_KEY, ConstantData.SaveData.DEFAULT_VALUME);
+
+//_soundSource.volume = PlayerPrefs.GetFloat(ConstantData.SaveData.SOUND_KEY, ConstantData.SaveData.DEFAULT_VALUME);
+//_randomPitchSoundSource.volume = PlayerPrefs.GetFloat(ConstantData.SaveData.SOUND_KEY, (ConstantData.SaveData.DEFAULT_VALUME * ConstantData.SaveData.FOOTSTEP_VOLUME_SCALE));
+//_randomPitchSoundSource.volume *= ConstantData.SaveData.FOOTSTEP_VOLUME_SCALE;

@@ -6,12 +6,14 @@ using UnityEngine.UI;
 
 public class SelectLevelWindow : MonoBehaviour
 {
-    private const string LEVEL_SCENE_SUBNAME = "Level";
+    //private const string LEVEL_SCENE_SUBNAME = "Level";
+    //[SerializeField] private List<string> _sceneNames = new();
 
     [SerializeField] private LevelCell _cellPrefub;
     [SerializeField] private RectTransform _container;
     [SerializeField] private Button _backButton;
-    [SerializeField] private List<string> _sceneNames = new();
+
+    private List<string> _sceneNames = new();
 
     private List<LevelCell> _levelCells = new();
 
@@ -28,22 +30,27 @@ public class SelectLevelWindow : MonoBehaviour
     }
 
 
-    private void Reset()
+    public void SetLevelsNames(List<string> sceneNames)
     {
-        int extentionLength = 6;
-        _sceneNames.Clear();
-
-        foreach (UnityEditor.EditorBuildSettingsScene scene in UnityEditor.EditorBuildSettings.scenes)
-        {
-            if (scene.enabled)
-            {
-                string name = scene.path.Substring(scene.path.LastIndexOf('/') + 1);
-
-                if (name.StartsWith(LEVEL_SCENE_SUBNAME))
-                    _sceneNames.Add(name.Substring(0, name.Length - extentionLength));
-            }
-        }
+        _sceneNames = sceneNames;
     }
+
+    //private void Reset()
+    //{
+    //    int extentionLength = 6;
+    //    _sceneNames.Clear();
+
+    //    foreach (UnityEditor.EditorBuildSettingsScene scene in UnityEditor.EditorBuildSettings.scenes)
+    //    {
+    //        if (scene.enabled)
+    //        {
+    //            string name = scene.path.Substring(scene.path.LastIndexOf('/') + 1);
+
+    //            if (name.StartsWith(LEVEL_SCENE_SUBNAME))
+    //                _sceneNames.Add(name.Substring(0, name.Length - extentionLength));
+    //        }
+    //    }
+    //}
 
     private void FillLevels()
     {
@@ -53,7 +60,7 @@ public class SelectLevelWindow : MonoBehaviour
         foreach (string sceneName in _sceneNames)
         {
             cell = Instantiate(_cellPrefub, _container);
-            cell.Initialize(sceneName, levelNumber, true);
+            cell.Initialize(sceneName, levelNumber, SaveService.IsUnlockedLevel(sceneName));
             cell.SceneSelected += OnSceneSelected;
 
             _levelCells.Add(cell);
