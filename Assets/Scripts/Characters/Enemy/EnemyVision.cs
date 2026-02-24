@@ -4,7 +4,7 @@ using UnityEngine;
 public class EnemyVision : MonoBehaviour
 {
     [SerializeField] private LayerMask _targetLayer;
-    [SerializeField] private LayerMask _intaractLayer;
+    [SerializeField] private LayerMask _ignorLayer;
 
     [SerializeField] private float _visionAngle = 90f;
     [SerializeField] private float _visionDistance = 5f;
@@ -44,7 +44,7 @@ public class EnemyVision : MonoBehaviour
 
             if (angleToTarget < _visionAngle / 2f)
             {
-                LayerMask raycastMask = ~((1 << gameObject.layer) | waypointLayer | _intaractLayer);
+                LayerMask raycastMask = ~((1 << gameObject.layer) | waypointLayer | _ignorLayer);
                 RaycastHit2D hit2D = Physics2D.Raycast(transform.position, directionToTarget, _visionDistance, raycastMask);
 
                 if (hit2D.collider != null && hit2D.collider == hit)

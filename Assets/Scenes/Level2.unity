@@ -241,6 +241,14 @@ PrefabInstance:
       propertyPath: _inventoryView
       value: 
       objectReference: {fileID: 1251200238}
+    - target: {fileID: 7676309694586510332, guid: d8849075c68b3574f8a8cef95a59da6e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7876311408851994393, guid: d8849075c68b3574f8a8cef95a59da6e, type: 3}
+      propertyPath: _mobileInputReader
+      value: 
+      objectReference: {fileID: 246679906}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -945,6 +953,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7228972539130316901, guid: 639516769fbf7ce40adb84d0121f40ca, type: 3}
   m_PrefabInstance: {fileID: 211859078}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &246679906 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1204623884216838559, guid: 5d94693eb96f1c74aac1e8edfd49994e, type: 3}
+  m_PrefabInstance: {fileID: 3388693499919545595}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 442f7ef18849e2244bf2a3dfcfec2a67, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &301321586
 GameObject:
   m_ObjectHideFlags: 0
@@ -66775,10 +66794,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1419904638}
     m_Modifications:
+    - target: {fileID: 1046817591744269592, guid: 62ffa16f2a57b134ca7cb93bafa9ae20, type: 3}
+      propertyPath: m_Interactable
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1079876249848308402, guid: 62ffa16f2a57b134ca7cb93bafa9ae20, type: 3}
       propertyPath: _key
       value: 
       objectReference: {fileID: 1454724781}
+    - target: {fileID: 5922012871082173096, guid: 62ffa16f2a57b134ca7cb93bafa9ae20, type: 3}
+      propertyPath: _isLock
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7349193760987479743, guid: 62ffa16f2a57b134ca7cb93bafa9ae20, type: 3}
       propertyPath: m_LocalPosition.x
       value: 14.293302
@@ -66903,6 +66930,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2648649329433028930, guid: b4b00957dc352604b893ead6bbb045cc, type: 3}
   m_PrefabInstance: {fileID: 1799083475}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2041734278 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8486151049333433651, guid: d8849075c68b3574f8a8cef95a59da6e, type: 3}
+  m_PrefabInstance: {fileID: 155766571}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4d7bb88555b3f74b946616d8e801960, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2069912687
 GameObject:
   m_ObjectHideFlags: 0
@@ -66975,6 +67013,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2069912688}
     m_Modifications:
+    - target: {fileID: 1204623884216838559, guid: 5d94693eb96f1c74aac1e8edfd49994e, type: 3}
+      propertyPath: _interactButton
+      value: 
+      objectReference: {fileID: 2041734278}
     - target: {fileID: 3756748311625026613, guid: 5d94693eb96f1c74aac1e8edfd49994e, type: 3}
       propertyPath: _pauseWindow
       value: 

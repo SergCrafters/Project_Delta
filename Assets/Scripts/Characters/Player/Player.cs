@@ -2,9 +2,9 @@ using System;
 using NUnit.Framework;
 using UnityEngine;
 
-[RequireComponent(typeof(InputReader), typeof(PlayerAttacker), typeof(Mover))]
+[RequireComponent(typeof(Noiser), typeof(PlayerAttacker), typeof(Mover))]
 [RequireComponent(typeof(AnimatorController), typeof(CollisionHandler), typeof(PlayerSound))]
-[RequireComponent(typeof(Dash), typeof(Noiser))]
+[RequireComponent(typeof(Dash))]
 
 public class Player : Character
 {
@@ -12,7 +12,7 @@ public class Player : Character
     [SerializeField] private Canvas _interactableCanvas;
     [SerializeField] private InventoryView _inventoryView;
 
-    private InputReader _inputReader;
+    private IInputReader _inputReader;
     private PlayerAttacker _attacker;
     private PlayerSound _sound;
     private Mover _mover;
@@ -34,7 +34,7 @@ public class Player : Character
     {
         base.Awake();
 
-        _inputReader = GetComponent<InputReader>();
+        //_inputReader = GetComponent<InputReader>();
         _attacker = GetComponent<PlayerAttacker>();
         _mover = GetComponent<Mover>();
         _dash = GetComponent<Dash>();
@@ -147,6 +147,8 @@ public class Player : Character
             }
         }
     }
+
+    public void Initialize(IInputReader inputReader) => _inputReader = inputReader;
 
     protected override void OnTakingDamage()
     {

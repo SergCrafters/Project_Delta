@@ -1,7 +1,7 @@
 using UnityEngine;
 using static UnityEngine.Rendering.DebugUI;
 
-public class InputReader : MonoBehaviour
+public class InputReader : MonoBehaviour, IInputReader
 {
     public Vector2 Dirrection { get; private set; }
 
@@ -44,18 +44,14 @@ public class InputReader : MonoBehaviour
             _isInterect = true;
         }
     }
-    public bool GetIsAttack() => GetBoolAsTrigger(ref _isAttack);
     //public bool GetIsDash()
     //{
     //    return _isDash; 
 
     //}
+    public bool GetIsAttack() => GetBoolAsTrigger(ref _isAttack);
 
-    public bool GetIsDashTap()
-    {
-        return GetBoolAsTrigger(ref _dashTap); 
-
-    }
+    public bool GetIsDashTap() => GetBoolAsTrigger(ref _dashTap);
 
     public bool GetIsInteract() => GetBoolAsTrigger(ref _isInterect);
 
