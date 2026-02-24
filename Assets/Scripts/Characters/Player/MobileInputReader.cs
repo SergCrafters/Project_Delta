@@ -31,19 +31,6 @@ public class MobileInputReader : MonoBehaviour, IInputReader
     {
         if (TimeManager.IsPaused)
             return;
-
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            _dashTap = true;
-        }
-
-        if (Input.GetKeyDown(KeyCode.LeftControl))
-            _isAttack = true;
-
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            _isInterect = true;
-        }
     }
 
     public bool GetIsDashTap() => GetBoolAsTrigger(ref _dashTap);
