@@ -2,7 +2,6 @@ using System;
 using UnityEngine;
 public class Health
 {
-
     public Health(int maxValue)
     {
         MaxValue = maxValue;
@@ -21,6 +20,7 @@ public class Health
     {
         if (damage < 0)
             return;
+
         ChangeValue(-damage);
 
         TakingDamage?.Invoke();
@@ -33,6 +33,7 @@ public class Health
     {
         if (value < 0)
             return;
+        
         ChangeValue(value);
     }
 
@@ -41,5 +42,4 @@ public class Health
         Value = Mathf.Clamp(Value + value, 0, MaxValue);
         ValueChanged?.Invoke(Value, MaxValue);
     }
-
 }

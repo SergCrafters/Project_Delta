@@ -15,17 +15,14 @@ public class MobileMoveTutorial : MonoBehaviour
     private void Awake()
     {
         if (_isMobile == false)
-        {
             gameObject.SetActive(false);
-        }
+        
     }
 
     private void OnEnable()
     {
         if (_joystick != null)
-        {
             _joystick.Down += OnDown;
-        }
 
         if (_triggerJump != null)
         {
@@ -53,9 +50,7 @@ public class MobileMoveTutorial : MonoBehaviour
     {
 
         if (_joystick != null)
-        {
             _joystick.Down -= OnDown;
-        }
 
         if (_triggerJump != null)
         {
@@ -79,25 +74,17 @@ public class MobileMoveTutorial : MonoBehaviour
         }
     }
 
-    private void ShowAttackPointer()
-    {
+    private void ShowAttackPointer() => 
         _attackPointer.gameObject.SetActive(true);
-    }
 
-    private void HideAttackPointer()
-    {
+    private void HideAttackPointer() => 
         _attackPointer.gameObject.SetActive(false);
-    }
 
-    private void ShowJumpPointer()
-    {
+    private void ShowJumpPointer() => 
         _jumpPointer.gameObject.SetActive(true);
-    }
 
-    private void HideJumpPointer()
-    {
+    private void HideJumpPointer() => 
         _jumpPointer.gameObject.SetActive(false);
-    }
 
     private void OnDown()
     {

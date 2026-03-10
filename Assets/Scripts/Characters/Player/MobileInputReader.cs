@@ -33,17 +33,23 @@ public class MobileInputReader : MonoBehaviour, IInputReader
             return;
     }
 
-    public bool GetIsDashTap() => GetBoolAsTrigger(ref _dashTap);
+    public bool GetIsDashTap() => 
+        GetBoolAsTrigger(ref _dashTap);
 
-    public bool GetIsInteract() => GetBoolAsTrigger(ref _isInterect);
+    public bool GetIsInteract() => 
+        GetBoolAsTrigger(ref _isInterect);
 
-    public bool GetIsAttack() => GetBoolAsTrigger(ref _isAttack);
+    public bool GetIsAttack() => 
+        GetBoolAsTrigger(ref _isAttack);
 
-    public void SetDash() => _dashTap = true;
+    private void SetDash() => 
+        _dashTap = true;
 
-    public void SetInteract() => _isInterect = true;
+    private void SetInteract() => 
+        _isInterect = true;
 
-    public void SetAttack() => _isAttack = true;
+    private void SetAttack() => 
+        _isAttack = true;
 
     private bool GetBoolAsTrigger(ref bool value)
     {

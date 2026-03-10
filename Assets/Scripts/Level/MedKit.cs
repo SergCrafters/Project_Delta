@@ -9,8 +9,6 @@ public class MedKit : MonoBehaviour, IItem
 
     public Sprite Icon => _icon;
 
-    public void Collect()
-    {
+    public void Collect() => 
         Destroy(gameObject);
-    }
 }

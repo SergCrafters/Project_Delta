@@ -11,45 +11,37 @@ public class AnimatorController : MonoBehaviour
 
     private void Start()
     {
-        animator.SetInteger("LastDirection", currentDirection);
+        animator.SetInteger(ConstantData.AnimatorParameters.LastDirection, currentDirection);
     }
 
     public void UpdateAnimationParameters(Vector2 movementInput, bool isDash, bool isAttack = false, bool isHit = false)
     {
-        animator.SetInteger("Action", isDash ? 3  : _isMoving ? 1 : 0);
-        //animator.SetInteger("Action", isDash ? 3 : isAttack ? 2 : _isMoving ? 1 : 0);
-        
+        animator.SetInteger(ConstantData.AnimatorParameters.Action, isDash ? ConstantData.ActionParameters.DASH :
+                            _isMoving ? ConstantData.ActionParameters.WALK : ConstantData.ActionParameters.IDLE);
+
         if (isAttack)
-        {
             animator.SetTrigger(ConstantData.AnimatorParameters.IsAttack);
-        }
 
         if (isHit)
-        {
             animator.SetTrigger(ConstantData.AnimatorParameters.IsHit);
-        }
+
         UpdateDirection(movementInput);
     }
 
-    public void UpdateAnimationParametersEnemy(Vector2 movementInput, bool isRun = false, 
+    public void UpdateAnimationParametersEnemy(Vector2 movementInput, bool isRun = false,
                 bool isWalk = false, bool isAttack = false, bool isHit = false, bool isDeath = false)
     {
-        animator.SetInteger("Action", isRun ? 2 : isWalk ? 1 : 0);
+        animator.SetInteger(ConstantData.AnimatorParameters.Action, isRun ? ConstantData.ActionParameters.RUN :
+                            isWalk ? ConstantData.ActionParameters.WALK : ConstantData.ActionParameters.IDLE);
 
         if (isAttack)
-        {
             animator.SetTrigger(ConstantData.AnimatorParameters.IsAttack);
-        }
 
         if (isHit)
-        {
             animator.SetTrigger(ConstantData.AnimatorParameters.IsHit);
-        }
 
         if (isDeath)
-        {
             animator.SetTrigger(ConstantData.AnimatorParameters.IsDeath);
-        }
 
         UpdateDirection(movementInput);
     }
@@ -65,22 +57,18 @@ public class AnimatorController : MonoBehaviour
             if (newDirection != currentDirection)
             {
                 currentDirection = newDirection;
-                animator.SetInteger("LastDirection", currentDirection);
+                animator.SetInteger(ConstantData.AnimatorParameters.LastDirection, currentDirection);
             }
         }
     }
 
-
     private int CalculateDirection(Vector2 input)
     {
         if (Mathf.Abs(input.x) > Mathf.Abs(input.y))
-        {
             return input.x > 0 ? ConstantData.DirectionData.DIRECTION_RIGHT : ConstantData.DirectionData.DIRECTION_LEFT;
-        }
+
         else if (Mathf.Abs(input.y) > 0)
-        {
             return input.y > 0 ? ConstantData.DirectionData.DIRECTION_UP : ConstantData.DirectionData.DIRECTION_DOWN;
-        }
 
         return currentDirection;
     }

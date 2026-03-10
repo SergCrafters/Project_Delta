@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class WinWindow : PauseWindowBase
 {
     [SerializeField] private Button _nextButton;
+
     private int _nextSceneIndex;
 
     protected override void OnEnable()
@@ -24,17 +25,10 @@ public class WinWindow : PauseWindowBase
         _nextButton.onClick.RemoveListener(LoadNextLevel);
     }
 
-    public void Open()
-    {
+    public void Open() => 
         gameObject.SetActive(true);
-    }
 
-    private void LoadNextLevel()
-    {
-        //int sceneIndex = SceneManager.GetActiveScene().buildIndex;
-
-        ////if (SceneManager.sceneCountInBuildSettings > sceneIndex)
+    private void LoadNextLevel() => 
         LoadScene(_nextSceneIndex++);
-    }
 }
 

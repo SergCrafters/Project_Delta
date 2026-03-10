@@ -39,9 +39,12 @@ class PatrolState : State, IMoveState
             _wayPointIndex = _backToPoint.FindIndexClosestWayPoint(_wayPoints, _wayPointIndex, _target);
             _target = _wayPoints[_wayPointIndex].transform;
         }
+
         else
+        {
             _wayPointIndex = _backToPoint.ChangeTarget(_wayPoints, _wayPointIndex, _target);
             _target = _wayPoints[_wayPointIndex].transform;
+        }
     }
 
     public override void Exit(State nextState)

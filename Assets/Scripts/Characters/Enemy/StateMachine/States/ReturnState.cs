@@ -25,11 +25,11 @@ class ReturnState : State
         {
                 new SeeTargetTransition(stateMachine, vision, waypointLayer, vision.transform, sqrAttackDistance),
                 new ReturnedTransition(stateMachine, backToPoint)
-
         };
     }
 
-    public override void Enter(State previousState) => _backToPoint.FindPathToRedPoint(_waypointLayer, _wayPoints);
+    public override void Enter(State previousState) => 
+        _backToPoint.FindPathToMainPoint(_waypointLayer, _wayPoints);
 
     public override void Update()
     {
@@ -38,12 +38,14 @@ class ReturnState : State
         if (target != null)
         {
             _mover.Walk(target);
-            _vision.LookAtTarget(target.position);
+            _vision.UpdateLook(target, _waypointLayer);
             _sound.PlayStepSound();
         }
+
         _animatorController.UpdateAnimationParametersEnemy(_mover.DirrectionEnemy, isWalk: true);
     }
 
-    public override void Exit(State nextState) => _backToPoint.ClearPath();
+    public override void Exit(State nextState) => 
+        _backToPoint.ClearPath();
 }
 

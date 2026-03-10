@@ -7,7 +7,6 @@ public class InventoryView : MonoBehaviour
 
     private List<InventoryItemView> _items = new();
 
-
     public void Add(IItem item)
     {
         InventoryItemView itemView = Instantiate(_itemPrefab, transform);

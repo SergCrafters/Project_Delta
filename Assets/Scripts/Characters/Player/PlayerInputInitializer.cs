@@ -5,11 +5,11 @@ using UnityEngine.UI;
 public class PlayerInputInitializer : MonoBehaviour
 {
     [SerializeField] private bool _isMobile;
-    [SerializeField] Player _player;
-    [SerializeField] InputReader _inputReader;
-    [SerializeField] MobileInputReader _mobileInputReader;
-    [SerializeField] TMP_Text _inreractInput;
-    [SerializeField] Image _inreractMobileInput;
+    [SerializeField] private Player _player;
+    [SerializeField] private InputReader _inputReader;
+    [SerializeField] private MobileInputReader _mobileInputReader;
+    [SerializeField] private TMP_Text _inreractInput;
+    [SerializeField] private Image _inreractMobileInput;
 
     private void Awake()
     {
@@ -28,5 +28,4 @@ public class PlayerInputInitializer : MonoBehaviour
             _inreractInput.gameObject.SetActive(true);
         }
     }
-
 }

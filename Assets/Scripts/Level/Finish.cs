@@ -18,12 +18,9 @@ public class Finish : Interactable
         }
 
         if (_switches.All(i => i.IsActive))
-        {
             Activated?.Invoke();
-        }
+
         else
-        {
             ShowMessage(_switches.Count(i => i.IsActive), _switches.Length, _switchIcon);
-        }
     }
 }

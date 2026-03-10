@@ -1211,7 +1211,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e4898cf605c6964398fa2a7c910039a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isMobile: 1
+  _isMobile: 0
   _movePointer: {fileID: 0}
   _joystick: {fileID: 0}
   _jumpPointer: {fileID: 2002418304}
@@ -5782,7 +5782,7 @@ GameObject:
   - component: {fileID: 525523526}
   - component: {fileID: 525523527}
   m_Layer: 0
-  m_Name: DashPit
+  m_Name: Pit
   m_TagString: DashPit
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -34104,7 +34104,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 2079887123}
     m_Modifications:
     - target: {fileID: 895116360157366233, guid: 92da67bb25704134797c307243688932, type: 3}
       propertyPath: m_PresetInfoIsWorld
@@ -34176,11 +34176,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3616097781264208934, guid: 92da67bb25704134797c307243688932, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -14.39
+      value: -974.39
       objectReference: {fileID: 0}
     - target: {fileID: 3616097781264208934, guid: 92da67bb25704134797c307243688932, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -5.51
+      value: -545.51
       objectReference: {fileID: 0}
     - target: {fileID: 3616097781264208934, guid: 92da67bb25704134797c307243688932, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -34646,7 +34646,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fd5cd7c8fbc57743ba3e17c1d5738da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isMobile: 1
+  _isMobile: 0
 --- !u!1 &1085534176
 GameObject:
   m_ObjectHideFlags: 0
@@ -35246,6 +35246,10 @@ PrefabInstance:
       propertyPath: _inventoryView
       value: 
       objectReference: {fileID: 5814818450385329494}
+    - target: {fileID: 7876311408851994393, guid: d8849075c68b3574f8a8cef95a59da6e, type: 3}
+      propertyPath: _isMobile
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7876311408851994393, guid: d8849075c68b3574f8a8cef95a59da6e, type: 3}
       propertyPath: _mobileInputReader
       value: 
@@ -42667,6 +42671,7 @@ Transform:
   m_Children:
   - {fileID: 192190506}
   - {fileID: 2021239571}
+  - {fileID: 977013185}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &2090991706 stripped
@@ -45425,5 +45430,4 @@ SceneRoots:
   - {fileID: 658123996}
   - {fileID: 4288558440986615533}
   - {fileID: 1112061558}
-  - {fileID: 634546119}
   - {fileID: 2079887123}

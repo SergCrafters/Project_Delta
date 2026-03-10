@@ -3,7 +3,6 @@ using UnityEngine;
 public class PlayerSound : MonoBehaviour
 {
     [SerializeField] private AudioManager _audioManager;
-
     [SerializeField] private AudioClip _stepSound;
     [SerializeField] private AudioClip _hitSound;
     [SerializeField] private AudioClip _attackSound;
@@ -11,7 +10,6 @@ public class PlayerSound : MonoBehaviour
     [SerializeField] private AudioClip _deathSound;
 
     private float _nextPlayStepTime;
-
 
     public void PlayStepSound()
     {
@@ -22,12 +20,16 @@ public class PlayerSound : MonoBehaviour
         }
     }
 
-    public void PlayDashSound() => _audioManager.PlaySound(_dashSound);
+    public void PlayDashSound() => 
+        _audioManager.PlaySound(_dashSound);
 
-    public void PlayHitSound() => _audioManager.PlaySound(_hitSound);
+    public void PlayHitSound() => 
+        _audioManager.PlaySound(_hitSound);
 
-    public void PlayAttackSound() => _audioManager.PlaySound(_attackSound);
+    public void PlayAttackSound() => 
+        _audioManager.PlaySound(_attackSound);
 
-    public void PlayDeathSound() => _audioManager.PlaySound(_deathSound);
+    public void PlayDeathSound() => 
+        _audioManager.PlaySound(_deathSound);
 
 }

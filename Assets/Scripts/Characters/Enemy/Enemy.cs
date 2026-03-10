@@ -51,29 +51,26 @@ public class Enemy : Character
         _animationEvent.AttackEnded -= _attacker.OnAttackEnded;
     }
 
-    protected override void OnTakingDamage()
-    {
-        _animatorController.UpdateAnimationParametersEnemy(_mover.DirrectionEnemy, isHit: true);
-        _sound.PlayHitSound();
-    }
-
     public void Hear(Vector3 target)
     {
         if (_vision.TrySeeTarget(out Transform _target, _waypointLayer) == false)
             _vision.LookAtTarget(target);
     }
 
+    protected override void OnTakingDamage()
+    {
+        _animatorController.UpdateAnimationParametersEnemy(_mover.DirrectionEnemy, isHit: true);
+        _sound.PlayHitSound();
+    }
+
     protected override void OnDied()
     {
         _sound.PlayDeathSound();
-        _mover.isDontMoving = true;
+        _mover.ÑhangeIsMoving(false);
         _animatorController.UpdateAnimationParametersEnemy(_mover.DirrectionEnemy, isDeath: true);
-
     }
 
-    private void Destroy()
-    {
+    private void Destroy() => 
         Destroy(gameObject);
-    }
 }
 

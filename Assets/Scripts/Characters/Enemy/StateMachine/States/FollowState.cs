@@ -40,6 +40,7 @@ class FollowState : State, IMoveState
             _vision.LookAtTarget(_target.position);
             _sound.PlayRunSound();
         }
+
         _animatorController.UpdateAnimationParametersEnemy(_mover.DirrectionEnemy, isRun: true);
     }
 }

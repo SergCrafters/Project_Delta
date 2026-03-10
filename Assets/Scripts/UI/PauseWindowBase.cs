@@ -25,6 +25,11 @@ public class PauseWindowBase : MonoBehaviour
         _exitButton.onClick.RemoveListener(Exit);
     }
 
+    protected void LoadScene(int index)
+    {
+        SceneManager.LoadScene(index);
+    }
+
     private void Restart()
     {
         LoadScene(SceneManager.GetActiveScene().buildIndex);
@@ -33,10 +38,5 @@ public class PauseWindowBase : MonoBehaviour
     private void Exit()
     {
         LoadScene(MAIN_MANU_SCENE_INDEX);
-    }
-
-    protected void LoadScene(int index)
-    {
-        SceneManager.LoadScene(index);
     }
 }

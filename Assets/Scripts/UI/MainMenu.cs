@@ -9,7 +9,6 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private Button _startButton;
     [SerializeField] private Button _settingsButton;
     [SerializeField] private Button _selectLevelButton;
-
     [SerializeField] private SettingsWindow _settingsWindow;
     [SerializeField] private SelectLevelWindow _selectLevelWindow;
 

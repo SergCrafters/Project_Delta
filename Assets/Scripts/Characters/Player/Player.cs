@@ -1,11 +1,8 @@
-using System;
-using NUnit.Framework;
 using UnityEngine;
 
 [RequireComponent(typeof(Noiser), typeof(PlayerAttacker), typeof(Mover))]
 [RequireComponent(typeof(AnimatorController), typeof(CollisionHandler), typeof(PlayerSound))]
 [RequireComponent(typeof(Dash))]
-
 public class Player : Character
 {
     [SerializeField] private AnimationEvent _animationEvent;
@@ -18,15 +15,11 @@ public class Player : Character
     private Mover _mover;
     private Dash _dash;
     private Noiser _noiser;
-    private AnimatorController _AnimatorController;
+    private AnimatorController _animatorController;
     private CollisionHandler _collisionHandler;
-    public bool _isDash;
-
+    private bool _isDash;
     private Inventory _inventory;
-
     private IInteractable _interactable;
-
-    private bool _isAttack;
     private Vector2 _lastDirection;
 
 
@@ -34,15 +27,13 @@ public class Player : Character
     {
         base.Awake();
 
-        //_inputReader = GetComponent<InputReader>();
         _attacker = GetComponent<PlayerAttacker>();
         _mover = GetComponent<Mover>();
         _dash = GetComponent<Dash>();
         _noiser = GetComponent<Noiser>();
-        _AnimatorController = GetComponent<AnimatorController>();
+        _animatorController = GetComponent<AnimatorController>();
         _collisionHandler = GetComponent<CollisionHandler>();
         _sound = GetComponent<PlayerSound>();
-
         _inventory = new Inventory();
     }
     protected override void OnEnable()
@@ -58,9 +49,8 @@ public class Player : Character
         _animationEvent.AttackEnded += _attacker.OnCanAttack;
         _animationEvent.DashStart += _sound.PlayDashSound;
 
-
-        _inventory.itemAdded += AddItemToInventory;
-        _inventory.itemRemoved += _inventoryView.Remove;
+        _inventory.ItemAdded += AddItemToInventory;
+        _inventory.ItemRemoved += _inventoryView.Remove;
 
         _dash.Return += ApplyDamage;
     }
@@ -78,8 +68,8 @@ public class Player : Character
         _animationEvent.AttackEnded -= _attacker.OnCanAttack;
         _animationEvent.DashStart -= _sound.PlayDashSound;
 
-        _inventory.itemAdded -= AddItemToInventory;
-        _inventory.itemRemoved -= _inventoryView.Remove;
+        _inventory.ItemAdded -= AddItemToInventory;
+        _inventory.ItemRemoved -= _inventoryView.Remove;
         
         _dash.Return -= ApplyDamage;
     }
@@ -90,11 +80,9 @@ public class Player : Character
         _isDash = _dash.GetIsDash();
 
         if (_inputReader.Dirrection != Vector2.zero)
-        {
             _lastDirection = _inputReader.Dirrection.normalized;
-        }
 
-        _AnimatorController.UpdateAnimationParameters(_inputReader.Dirrection, _isDash, _isAttack = false);
+        _animatorController.UpdateAnimationParameters(_inputReader.Dirrection, _isDash, isAttack : false);
     }
 
     private void FixedUpdate()
@@ -115,30 +103,27 @@ public class Player : Character
                 _attacker.UpdateAttackZone(_lastDirection);
                 _noiser.CreateNoise();
                 _sound.PlayAttackSound();
-                _AnimatorController.UpdateAnimationParameters(_inputReader.Dirrection, _isDash, _isAttack = true);
+                _animatorController.UpdateAnimationParameters(_inputReader.Dirrection, _isDash, isAttack : true);
             }
 
             if (_inputReader.Dirrection == Vector2.zero)
-            {
                 _mover.Move(Vector2.zero, _dash.GetIsDash());
-            }
         }
 
         else
+        {
             _mover.Move(Vector2.zero, _dash.GetIsDash());
+        }
 
         if (_inputReader.GetIsInteract() && _interactable != null)
         {
             if (_interactable.IsLock)
             {
                 if (_inventory.Contains(_interactable.Key))
-                {
                     _interactable.Unlock((Key)_inventory.Take(_interactable.Key));
-                }
+
                 else
-                {
                     _interactable.Interact();
-                }
             }
             else
             {
@@ -148,12 +133,23 @@ public class Player : Character
         }
     }
 
-    public void Initialize(IInputReader inputReader) => _inputReader = inputReader;
+    public void Initialize(IInputReader inputReader) => 
+        _inputReader = inputReader;
+
+    public void Fall(int fallDamage)
+    {
+        ApplyDamage(fallDamage);
+        ReturnToSafeZone();
+    }
+
+
+    public bool GetIsDash() => 
+        _isDash;
 
     protected override void OnTakingDamage()
     {
         _sound.PlayHitSound();
-        _AnimatorController.UpdateAnimationParameters(_inputReader.Dirrection, _isDash, isHit : true);
+        _animatorController.UpdateAnimationParameters(_inputReader.Dirrection, _isDash, isHit : true);
 
         if (_attacker.canAction == false)
             _attacker.OnCanAttack();
@@ -181,14 +177,15 @@ public class Player : Character
         }
     }
 
-    private void OnKeyFounded(Key key)
-    {
+    private void OnKeyFounded(Key key) => 
         _inventory.Add(key);
-    }
 
     private void AddItemToInventory(IItem item)
     {
         _inventoryView.Add(item);
         item.Collect();
     }
+
+    private void ReturnToSafeZone() => 
+        transform.position = _dash.GetIsPointDash();
 }

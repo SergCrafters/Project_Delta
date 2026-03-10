@@ -6,8 +6,6 @@ public class ToutchHandler : MonoBehaviour, IPointerDownHandler
 {
     public event Action Down;
 
-    public void OnPointerDown(PointerEventData eventData)
-    {
+    public void OnPointerDown(PointerEventData eventData) => 
         Down?.Invoke();
-    }
 }

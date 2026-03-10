@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
 class AttackState : State
@@ -9,7 +8,6 @@ class AttackState : State
     private EnemySound _sound;
     private LayerMask _waypointLayer;
     private Transform _target;
-
 
     public AttackState(StateMachine stateMachine, EnemyAttacker attacker, AnimatorController animator, EnemyVision vision, EnemySound sound, float tryFindTime, LayerMask waypointLayer, float sqrAttackDistance) : base(stateMachine)
     {
@@ -23,7 +21,7 @@ class AttackState : State
          {
             new SeeTargetTransition(stateMachine, vision, waypointLayer, vision.transform, sqrAttackDistance),
             new LostTargetTransition(stateMachine, vision, waypointLayer)
-     };
+         };
     }
 
     public override void Enter(State previousState)
@@ -36,9 +34,7 @@ class AttackState : State
         _animator.UpdateAnimationParametersEnemy(_vision.GetVisionDirection());
 
         if (_target != null)
-        {
             _vision.LookAtTarget(_target.position);
-        }
 
         if (_attacker.CanAttack)
         {
@@ -46,7 +42,6 @@ class AttackState : State
             _attacker.StartAttack();
             _animator.UpdateAnimationParametersEnemy(_vision.GetVisionDirection(), isAttack: true);
             _sound.PlayAttackSound();
-
         }
     }
 }

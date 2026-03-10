@@ -7,14 +7,11 @@ class IdleState : State
     private AnimatorController _animatorController;
     private EnemyVision _vision;
 
-
     public IdleState(StateMachine stateMachine, Mover mover, EnemyVision vision, AnimatorController animatorController, LayerMask waypointLayer, float waitTime, float sqrAttackDistance) : base(stateMachine)
     {
         _waitTime = waitTime;
         _animatorController = animatorController;
         _vision = vision;
-
-
 
         Transitions = new Transition[]
         {

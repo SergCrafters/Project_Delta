@@ -6,9 +6,6 @@ using UnityEngine.UI;
 
 public class SelectLevelWindow : MonoBehaviour
 {
-    //private const string LEVEL_SCENE_SUBNAME = "Level";
-    //[SerializeField] private List<string> _sceneNames = new();
-
     [SerializeField] private LevelCell _cellPrefub;
     [SerializeField] private RectTransform _container;
     [SerializeField] private Button _backButton;
@@ -35,22 +32,10 @@ public class SelectLevelWindow : MonoBehaviour
         _sceneNames = sceneNames;
     }
 
-    //private void Reset()
-    //{
-    //    int extentionLength = 6;
-    //    _sceneNames.Clear();
-
-    //    foreach (UnityEditor.EditorBuildSettingsScene scene in UnityEditor.EditorBuildSettings.scenes)
-    //    {
-    //        if (scene.enabled)
-    //        {
-    //            string name = scene.path.Substring(scene.path.LastIndexOf('/') + 1);
-
-    //            if (name.StartsWith(LEVEL_SCENE_SUBNAME))
-    //                _sceneNames.Add(name.Substring(0, name.Length - extentionLength));
-    //        }
-    //    }
-    //}
+    public void Open()
+    {
+        gameObject.SetActive(true);
+    }
 
     private void FillLevels()
     {
@@ -83,11 +68,6 @@ public class SelectLevelWindow : MonoBehaviour
     private void OnSceneSelected(String sceneName)
     {
         SceneManager.LoadScene(sceneName);
-    }
-
-    public void Open()
-    {
-        gameObject.SetActive(true);
     }
 
     private void Close()

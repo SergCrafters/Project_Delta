@@ -3,20 +3,15 @@ using UnityEngine;
 public class AudioManager : MonoBehaviour
 {
     [SerializeField] private AudioListener _listener;
-
     [SerializeField] private AudioSource _musicSource;
     [SerializeField] private AudioSource _soundSource;
     [SerializeField] private AudioSource _randomPitchSoundSource;
-
     [SerializeField] private float _lowPitch = 0f;
     [SerializeField] private float _topPitch = 2f;
-
     [SerializeField] private AudioClip _defaultMusic;
-
     [SerializeField] private float _sqrMaxDistanceToSource = 100f;
 
     private Transform _listenerTransform;
-
 
     private void Awake()
     {
@@ -31,9 +26,8 @@ public class AudioManager : MonoBehaviour
         _musicSource.loop = false;
     }
 
-    public float Get_sqrMaxDistanceToSource() => _sqrMaxDistanceToSource;
-
-    public bool CanBeHeard(Vector3 sourcePosition) => (sourcePosition - _listenerTransform.position).sqrMagnitude < _sqrMaxDistanceToSource;
+    public bool CanBeHeard(Vector3 sourcePosition) => 
+        (sourcePosition - _listenerTransform.position).sqrMagnitude < _sqrMaxDistanceToSource;
 
     public void PlayMusic(AudioClip clip)
     {
@@ -42,10 +36,8 @@ public class AudioManager : MonoBehaviour
         _musicSource.Play();
     }
 
-    public void PlaySound(AudioClip clip)
-    {
+    public void PlaySound(AudioClip clip) => 
         _soundSource.PlayOneShot(clip);
-    }
 
     public void PlayRandomPitchSound(AudioClip clip)
     {
@@ -56,28 +48,11 @@ public class AudioManager : MonoBehaviour
     public void RefreshSettings()
     {
         _musicSource.mute = SaveService.MusicIsOn == false;
-
         _soundSource.mute = SaveService.SoundIsOn == false;
         _randomPitchSoundSource.mute = SaveService.SoundIsOn == false;
 
-
         _musicSource.volume = SaveService.MusicVolume;
-
         _soundSource.volume = SaveService.SoundVolume;
         _randomPitchSoundSource.volume = SaveService.SoundVolume * ConstantData.SaveData.FOOTSTEP_VOLUME_SCALE;
     }
-
 }
-
-
-//_musicSource.mute = PlayerPrefs.GetInt(ConstantData.SaveData.MUSIC_MUTE_KEY, ConstantData.SaveData.IS_ON_VALUE) != ConstantData.SaveData.IS_ON_VALUE;
-
-//_soundSource.mute = PlayerPrefs.GetInt(ConstantData.SaveData.SOUND_MUTE_KEY, ConstantData.SaveData.IS_ON_VALUE) != ConstantData.SaveData.IS_ON_VALUE;
-//_randomPitchSoundSource.mute = PlayerPrefs.GetInt(ConstantData.SaveData.SOUND_MUTE_KEY, ConstantData.SaveData.IS_ON_VALUE) != ConstantData.SaveData.IS_ON_VALUE;
-
-
-//_musicSource.volume = PlayerPrefs.GetFloat(ConstantData.SaveData.MUSIC_KEY, ConstantData.SaveData.DEFAULT_VALUME);
-
-//_soundSource.volume = PlayerPrefs.GetFloat(ConstantData.SaveData.SOUND_KEY, ConstantData.SaveData.DEFAULT_VALUME);
-//_randomPitchSoundSource.volume = PlayerPrefs.GetFloat(ConstantData.SaveData.SOUND_KEY, (ConstantData.SaveData.DEFAULT_VALUME * ConstantData.SaveData.FOOTSTEP_VOLUME_SCALE));
-//_randomPitchSoundSource.volume *= ConstantData.SaveData.FOOTSTEP_VOLUME_SCALE;

@@ -9,7 +9,6 @@ public class PlayerAttacker : MonoBehaviour
     [SerializeField] private int _damage;
     [SerializeField] private float _offsetDistance;
     [SerializeField] private LayerMask _targetLayer;
-
     
     private void OnDrawGizmos()
     {
@@ -19,22 +18,21 @@ public class PlayerAttacker : MonoBehaviour
 
     public void Attack()
     {
-        print("атака игрока");
         Collider2D[] hits = Physics2D.OverlapCircleAll(GetAttackOrigin(_lastAttackDirection), _radius, _targetLayer);
 
         foreach (Collider2D hit in hits)
         {
             if (hit != null && hit.TryGetComponent(out Enemy enemy))
-            {
-                print("попадание");
                 enemy.ApplyDamage(_damage);
-            }
         }
     }
 
-    public void UpdateAttackZone(Vector2 attackDirection) => _lastAttackDirection = attackDirection;
+    public void UpdateAttackZone(Vector2 attackDirection) => 
+        _lastAttackDirection = attackDirection;
 
-    public Vector2 GetAttackOrigin(Vector2 direction) => (Vector2)transform.position + direction * _offsetDistance;
+    public Vector2 GetAttackOrigin(Vector2 direction) => 
+        (Vector2)transform.position + direction * _offsetDistance;
 
-    public void OnCanAttack() => canAction = !canAction;
+    public void OnCanAttack() => 
+        canAction = !canAction;
 }

@@ -15,6 +15,16 @@ public static class ConstantData
         public static readonly int IsAttack = Animator.StringToHash(nameof(IsAttack));
         public static readonly int IsHit = Animator.StringToHash(nameof(IsHit));
         public static readonly int IsDeath = Animator.StringToHash(nameof(IsDeath));
+        public static readonly int Action = Animator.StringToHash(nameof(Action));
+        public static readonly int LastDirection = Animator.StringToHash(nameof(LastDirection));
+    }
+
+    public static class ActionParameters
+    {
+        public const int IDLE = 0;
+        public const int WALK = 1;
+        public const int RUN = 2;
+        public const int DASH = 3;
     }
 
     public static class DirectionData

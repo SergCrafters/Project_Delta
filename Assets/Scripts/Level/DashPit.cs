@@ -6,8 +6,7 @@ public class DashPit : MonoBehaviour
     [SerializeField] private bool _isPlayerInPit = false;
     [SerializeField] private int _fallDamage = 10;
 
-    private Dash _dash;
-
+    private Player _player;
 
     private void Start()
     {
@@ -17,10 +16,10 @@ public class DashPit : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.TryGetComponent(out Dash dash) && dash.GetIsDash())
+        if (collision.TryGetComponent(out Player player) && player.GetIsDash())
         {
             _isPlayerInPit = true;
-            _dash = dash;
+            _player = player;
         }
         else
         {
@@ -35,7 +34,7 @@ public class DashPit : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.TryGetComponent(out Dash dash))
+        if (collision.TryGetComponent(out Player player))
         {
             _isPlayerInPit = false;
             _pitCollider.isTrigger = true;
@@ -44,13 +43,10 @@ public class DashPit : MonoBehaviour
 
     private void Update()
     {
-        print(_isPlayerInPit);
-
-        if (_isPlayerInPit && _dash != null && !_dash.GetIsDash())
+        if (_isPlayerInPit && _player != null && _player.GetIsDash() == null)
         {
-            _dash.ReturnToSafeZone(_fallDamage);
+            _player.Fall(_fallDamage);
             _isPlayerInPit = false;
         }
     }
-
 }

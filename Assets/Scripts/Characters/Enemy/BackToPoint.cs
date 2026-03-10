@@ -9,13 +9,31 @@ public class BackToPoint : MonoBehaviour
     private List<Transform> _currentPath = new List<Transform>();
     private int _currentPathIndex = 0;
 
-    public void FindPathToRedPoint(LayerMask waypointLayer, WayPoint[] _wayPoints)
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawWireSphere(transform.position, _searchRadius);
+
+        if (_currentPath != null && _currentPath.Count > 0)
+        {
+            Gizmos.color = Color.green;
+            for (int i = 0; i < _currentPath.Count - 1; i++)
+            {
+                if (_currentPath[i] != null && _currentPath[i + 1] != null)
+                    Gizmos.DrawLine(_currentPath[i].position, _currentPath[i + 1].position);
+            }
+        }
+    }
+
+    public void FindPathToMainPoint(LayerMask waypointLayer, WayPoint[] wayPoints)
     {
         _currentPathIndex = 0;
         _currentPath.Clear();
 
         Collider2D[] nearbyPoints = Physics2D.OverlapCircleAll(transform.position, _searchRadius, waypointLayer);
-        if (nearbyPoints.Length == 0) return;
+
+        if (nearbyPoints.Length == 0) 
+            return;
 
         WayPoint startPoint = null;
         float minDistance = float.MaxValue;
@@ -35,9 +53,7 @@ public class BackToPoint : MonoBehaviour
         }
 
         if (startPoint != null)
-        {
-            _currentPath = FindPathToRed(startPoint, _wayPoints);
-        }
+            _currentPath = FindPathToRed(startPoint, wayPoints);
     }
 
     public Transform GetNextTarget()
@@ -53,17 +69,45 @@ public class BackToPoint : MonoBehaviour
             _currentPathIndex++;
 
             if (_currentPathIndex < _currentPath.Count)
-            {
                 return _currentPath[_currentPathIndex];
-            }
+
             else
-            {
                 return null;
-            }
         }
 
         return currentTarget;
     }
+
+    public bool IsReturned() => 
+        _currentPathIndex >= _currentPath.Count;
+
+    public void ClearPath()
+    {
+        _currentPath.Clear();
+        _currentPathIndex = 0;
+    }
+
+
+    public int FindIndexClosestWayPoint(WayPoint[] wayPoints, int wayPointIndex, Transform target)
+    {
+        float minDistance = float.MaxValue;
+        int closestIndex = 0;
+
+        for (int i = 0; i < wayPoints.Length; i++)
+        {
+
+            float distance = Vector3.SqrMagnitude(wayPoints[i].transform.position);
+            if (distance < minDistance)
+            {
+                minDistance = distance;
+                closestIndex = i;
+            }
+        }
+
+        return wayPointIndex = GetNextWayPoint(wayPoints, closestIndex);
+    }
+
+    public int ChangeTarget(WayPoint[] wayPoints, int wayPointIndex, Transform target) => wayPointIndex = GetNextWayPoint(wayPoints, wayPointIndex);
 
     private List<Transform> FindPathToRed(WayPoint startPoint, WayPoint[] _wayPoints)
     {
@@ -115,56 +159,6 @@ public class BackToPoint : MonoBehaviour
         return path;
     }
 
-    public bool IsReturned()
-    {
-        return _currentPathIndex >= _currentPath.Count;
-    }
-
-    public void ClearPath()
-    {
-        _currentPath.Clear();
-        _currentPathIndex = 0;
-    }
-
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.cyan;
-        Gizmos.DrawWireSphere(transform.position, _searchRadius);
-
-        if (_currentPath != null && _currentPath.Count > 0)
-        {
-            Gizmos.color = Color.green;
-            for (int i = 0; i < _currentPath.Count - 1; i++)
-            {
-                if (_currentPath[i] != null && _currentPath[i + 1] != null)
-                {
-                    Gizmos.DrawLine(_currentPath[i].position, _currentPath[i + 1].position);
-                }
-            }
-        }
-    }
-
-    public int FindIndexClosestWayPoint(WayPoint[]  wayPoints, int wayPointIndex, Transform target)
-    {
-
-        float minDistance = float.MaxValue;
-        int closestIndex = 0;
-
-        for (int i = 0; i < wayPoints.Length; i++)
-        {
-
-            float distance = Vector3.SqrMagnitude(wayPoints[i].transform.position);
-            if (distance < minDistance)
-            {
-                minDistance = distance;
-                closestIndex = i;
-            }
-        }
-
-        return wayPointIndex = GetNextWayPoint(wayPoints, closestIndex);
-    }
-
-    public int ChangeTarget(WayPoint[] wayPoints, int wayPointIndex, Transform target) => wayPointIndex = GetNextWayPoint(wayPoints, wayPointIndex);
-
-    private int GetNextWayPoint(WayPoint[] wayPoints, int wayPointIndex) => wayPointIndex = ++wayPointIndex % wayPoints.Length;
+    private int GetNextWayPoint(WayPoint[] wayPoints, int wayPointIndex) => 
+        wayPointIndex = ++wayPointIndex % wayPoints.Length;
 }

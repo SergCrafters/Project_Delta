@@ -10,9 +10,7 @@ abstract class Transition
 
         public abstract bool IsNeedTransit();
 
-    public virtual void Transit()
-    {
+    public virtual void Transit() => 
         Transiting?.Invoke();
-    }
 }
 

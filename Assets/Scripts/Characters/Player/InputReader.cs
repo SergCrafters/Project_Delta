@@ -1,5 +1,4 @@
 using UnityEngine;
-using static UnityEngine.Rendering.DebugUI;
 
 public class InputReader : MonoBehaviour, IInputReader
 {
@@ -18,24 +17,23 @@ public class InputReader : MonoBehaviour, IInputReader
         Dirrection = new Vector2(Input.GetAxis(ConstantData.InpudData.HORIZONTAL_AXIS), Input.GetAxis(ConstantData.InpudData.VERTICAL_AXIS));
 
         if (Input.GetKeyDown(KeyCode.Space))
-        {
             _dashTap = true;
-        }
 
         if (Input.GetKeyDown(KeyCode.LeftControl))
             _isAttack = true;
 
         if (Input.GetKeyDown(KeyCode.F))
-        {
             _isInterect = true;
-        }
     }
 
-    public bool GetIsAttack() => GetBoolAsTrigger(ref _isAttack);
+    public bool GetIsAttack() => 
+        GetBoolAsTrigger(ref _isAttack);
 
-    public bool GetIsDashTap() => GetBoolAsTrigger(ref _dashTap);
+    public bool GetIsDashTap() => 
+        GetBoolAsTrigger(ref _dashTap);
 
-    public bool GetIsInteract() => GetBoolAsTrigger(ref _isInterect);
+    public bool GetIsInteract() => 
+        GetBoolAsTrigger(ref _isInterect);
 
     private bool GetBoolAsTrigger(ref bool value)
     {

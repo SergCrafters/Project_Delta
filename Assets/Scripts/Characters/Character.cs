@@ -28,20 +28,14 @@ public abstract class Character : MonoBehaviour
         Health.Died -= OnDied;
     }
 
-    public void ApplyDamage(int damage)
-    {
+    public void ApplyDamage(int damage) => 
         Health.ApplyDamage(damage);
-    }
 
-    public void Heal(int value)
-    {
+    public void Heal(int value) => 
         Health.Heal(value);
-    }
 
-    protected virtual void OnDied()
-    {
+    protected virtual void OnDied() => 
         Died?.Invoke();
-    }
 
     protected abstract void OnTakingDamage();
 

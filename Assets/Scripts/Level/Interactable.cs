@@ -9,7 +9,6 @@ public abstract class Interactable : MonoBehaviour, IInteractable
     [SerializeField] private Lock _lock;
     [SerializeField] private MassegBox _messagBox;
 
-
     public bool IsLock => _isLock;
 
     public Key Key => _lock.Key;
@@ -37,9 +36,6 @@ public abstract class Interactable : MonoBehaviour, IInteractable
         }
     }
 
-
-    protected void ShowMessage(int count, int neededCount, Sprite sprite)
-    {
+    protected void ShowMessage(int count, int neededCount, Sprite sprite) => 
         _messagBox.Show(count, neededCount, sprite);
-    }
 }

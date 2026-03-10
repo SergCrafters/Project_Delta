@@ -30,5 +30,4 @@ public class LevelCell : MonoBehaviour
         _openButton.onClick.RemoveListener(Select);
         SceneSelected?.Invoke(_sceneName);
     }
-
 }

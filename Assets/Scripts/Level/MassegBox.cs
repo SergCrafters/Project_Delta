@@ -14,8 +14,6 @@ public class MassegBox : MonoBehaviour
 
     private Coroutine _coroutine;
 
-
-
     public void Show(int count, int neededCount, Sprite sprite)
     {
         _image.sprite = sprite;

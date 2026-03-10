@@ -1,18 +1,14 @@
 using System;
 using System.Collections.Generic;
-using UnityEngine;
 
 public class Inventory
 {
     private List<IItem> _items;
 
-    public Inventory()
-    {
-        _items = new();
-    }
+    public Inventory() => _items = new();
 
-    public event Action<IItem> itemAdded;
-    public event Action<IItem> itemRemoved;
+    public event Action<IItem> ItemAdded;
+    public event Action<IItem> ItemRemoved;
 
     public void Add(IItem item)
     {
@@ -20,7 +16,7 @@ public class Inventory
             return;
 
         _items.Add(item);
-        itemAdded?.Invoke(item);
+        ItemAdded?.Invoke(item);
     }
 
     public IItem Take(IItem item)
@@ -32,12 +28,10 @@ public class Inventory
             return null;
 
         _items.Remove(item);
-        itemRemoved?.Invoke(item);
+        ItemRemoved?.Invoke(item);
         return item;
     }
 
-    public bool Contains(IItem item)
-    {
-        return _items.Contains(item);
-    }
+    public bool Contains(IItem item) => 
+        _items.Contains(item);
 }

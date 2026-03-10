@@ -6,8 +6,6 @@ public class Key : MonoBehaviour, IItem
 
     public Sprite Icon => _icon;
 
-    public void Collect()
-    {
+    public void Collect() => 
         Destroy(gameObject);
-    }
 }

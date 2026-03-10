@@ -3,9 +3,7 @@ using UnityEngine.UI;
 
 public class SettingsWindow : MonoBehaviour
 {
-
     [SerializeField] private AudioManager _audioManager;
-
     [SerializeField] private Button _backButton;
     [SerializeField] private Slider _musicVoluem;
     [SerializeField] private Slider _soundVoluem;
@@ -34,49 +32,41 @@ public class SettingsWindow : MonoBehaviour
     public void Open()
     {
         gameObject.SetActive(true);
-
-        _musicSwitcher.isOn = PlayerPrefs.GetInt(ConstantData.SaveData.MUSIC_MUTE_KEY, ConstantData.SaveData.IS_ON_VALUE) == ConstantData.SaveData.IS_ON_VALUE;
-        _soundSwitcher.isOn = PlayerPrefs.GetInt(ConstantData.SaveData.SOUND_MUTE_KEY, ConstantData.SaveData.IS_ON_VALUE) == ConstantData.SaveData.IS_ON_VALUE;
-        _musicVoluem.value = PlayerPrefs.GetFloat(ConstantData.SaveData.MUSIC_KEY, ConstantData.SaveData.DEFAULT_VALUME);
-        _soundVoluem.value = PlayerPrefs.GetFloat(ConstantData.SaveData.SOUND_KEY, ConstantData.SaveData.DEFAULT_VALUME);
+        _musicSwitcher.isOn = SaveService.MusicIsOn;
+        _soundSwitcher.isOn = SaveService.SoundIsOn;
+        _musicVoluem.value = SaveService.MusicVolume;
+        _soundVoluem.value = SaveService.SoundVolume;
     }
-
-    private void ChangeVoluem(float value, string key)
-    {
-        PlayerPrefs.SetFloat(key, value);
-        _audioManager.RefreshSettings();
-    }
-
 
     private void ChangeVoluemMusic(float value)
     {
-        ChangeVoluem(value, ConstantData.SaveData.MUSIC_KEY);
+        SaveService.SetMusicVolume(value);
+        _audioManager.RefreshSettings();
+
     }
 
     private void ChangeVoluemSound(float value)
     {
-        ChangeVoluem(value, ConstantData.SaveData.SOUND_KEY);
-    }
-
-    private void SwitchMut(bool isOn, string key)
-    {
-        PlayerPrefs.SetInt(key, isOn ? ConstantData.SaveData.IS_ON_VALUE : ConstantData.SaveData.IS_OFF_VALUE);
+        SaveService.SetSoundVolume(value);
         _audioManager.RefreshSettings();
+
     }
 
     private void SwitchMutMusic(bool isOn)
     {
-        SwitchMut(isOn, ConstantData.SaveData.MUSIC_MUTE_KEY);
+        SaveService.SetMusicIsOn(isOn);
+        _audioManager.RefreshSettings();
     }
 
     private void SwitchMutSound(bool isOn)
     {
-        SwitchMut(isOn, ConstantData.SaveData.SOUND_MUTE_KEY);
+        SaveService.SetSoundIsOn(isOn);
+        _audioManager.RefreshSettings();
     }
 
     private void Close()
     {
         gameObject.SetActive(false);
+        SaveService.Save();
     }
-
 }

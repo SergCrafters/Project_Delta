@@ -1,13 +1,7 @@
-using UnityEngine;
 
 public class FailWindow : PauseWindowBase
 {
     private Player _player;
-
-    private void OnDestroy()
-    {
-        _player.Died -= OnPlayerDied;
-    }
 
     public void Initialize(Player player)
     {
@@ -15,8 +9,9 @@ public class FailWindow : PauseWindowBase
         _player.Died += OnPlayerDied;
     }
 
-    private void OnPlayerDied()
-    {
+    private void OnDestroy() =>
+        _player.Died -= OnPlayerDied;
+
+    private void OnPlayerDied() =>
         gameObject.SetActive(true);
-    }
 }

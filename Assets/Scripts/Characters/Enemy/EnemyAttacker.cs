@@ -23,16 +23,14 @@ public class EnemyAttacker : MonoBehaviour
 
     public void Attack()
     {
-        print("атака врага");
         Collider2D hit = Physics2D.OverlapCircle(GetAttackOrigin(), _radius, _targetLayer);
 
         if (hit != null && hit.TryGetComponent(out Player player))
-        {
             player.ApplyDamage(_damage);
-        }
     }
 
-    public void SetAttackDirection(Vector2 direction) => _attackDirection = direction.normalized;
+    public void SetAttackDirection(Vector2 direction) => 
+        _attackDirection = direction.normalized;
 
     public void StartAttack()
     {
@@ -40,7 +38,9 @@ public class EnemyAttacker : MonoBehaviour
         _endWaitTime = Time.time + _delay;
     }
 
-    public void OnAttackEnded() => IsAttack = false;
+    public void OnAttackEnded() => 
+        IsAttack = false;
 
-    private Vector2 GetAttackOrigin() => (Vector2)transform.position + _attackDirection * _offsetDistance;
+    private Vector2 GetAttackOrigin() => 
+        (Vector2)transform.position + _attackDirection * _offsetDistance;
 }

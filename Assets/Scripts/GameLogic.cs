@@ -15,16 +15,12 @@ public class GameLogic : MonoBehaviour
         _finish.Activated += UnlockNextLevel;
     }
 
-
-
     private void OnDestroy()
     {
         _finish.Activated -= _winWindow.Open;
         _finish.Activated -= UnlockNextLevel;
     }
 
-    private void UnlockNextLevel()
-    {
+    private void UnlockNextLevel() => 
         SaveService.UnlockNextLevel(SceneManager.GetActiveScene().name);
-    }
 }

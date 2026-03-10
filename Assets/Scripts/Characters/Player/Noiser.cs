@@ -29,9 +29,7 @@ public class Noiser : MonoBehaviour
         foreach (Collider2D listener in listeners)
         {
             if (listener.TryGetComponent(out Enemy enemy))
-            {
                 enemy.Hear(transform.position);
-            }
         }
     }
 }
