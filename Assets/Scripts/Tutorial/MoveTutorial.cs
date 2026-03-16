@@ -1,4 +1,5 @@
 using UnityEngine;
+using YG;
 
 public class MoveTutorial : MonoBehaviour
 {
@@ -6,7 +7,7 @@ public class MoveTutorial : MonoBehaviour
 
     private void Awake()
     {
-        if (_isMobile)
+        if (Application.isEditor && _isMobile || YG2.envir.isMobile || YG2.envir.isTablet)
             gameObject.SetActive(false);
     }
 }

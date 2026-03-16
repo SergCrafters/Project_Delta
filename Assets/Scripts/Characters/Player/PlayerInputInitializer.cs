@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using YG;
 
 public class PlayerInputInitializer : MonoBehaviour
 {
@@ -13,7 +14,7 @@ public class PlayerInputInitializer : MonoBehaviour
 
     private void Awake()
     {
-        if (_isMobile)
+        if (Application.isEditor && _isMobile || YG2.envir.isMobile || YG2.envir.isTablet)
         {
             _player.Initialize(_mobileInputReader);
             _inputReader.enabled = false;

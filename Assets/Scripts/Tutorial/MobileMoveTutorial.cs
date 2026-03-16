@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using YG;
 
 public class MobileMoveTutorial : MonoBehaviour
 {
@@ -14,7 +15,7 @@ public class MobileMoveTutorial : MonoBehaviour
 
     private void Awake()
     {
-        if (_isMobile == false)
+        if (Application.isEditor && _isMobile == false || YG2.envir.isDesktop)
             gameObject.SetActive(false);
         
     }
