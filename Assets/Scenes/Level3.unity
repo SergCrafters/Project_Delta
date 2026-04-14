@@ -1288,6 +1288,10 @@ PrefabInstance:
       propertyPath: m_margin.w
       value: 0.9078369
       objectReference: {fileID: 0}
+    - target: {fileID: 1695102273765954662, guid: 22599df14cd976543a295d494e348b28, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2662795742598440464, guid: 22599df14cd976543a295d494e348b28, type: 3}
       propertyPath: m_Name
       value: WinCanvas
