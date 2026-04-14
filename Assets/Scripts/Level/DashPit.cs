@@ -43,7 +43,7 @@ public class DashPit : MonoBehaviour
 
     private void Update()
     {
-        if (_isPlayerInPit && _player != null && _player.GetIsDash() == null)
+        if (_isPlayerInPit && _player != null && _player.GetIsDash() == false)
         {
             _player.Fall(_fallDamage);
             _isPlayerInPit = false;

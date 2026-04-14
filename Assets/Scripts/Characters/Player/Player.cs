@@ -70,7 +70,7 @@ public class Player : Character
 
         _inventory.ItemAdded -= AddItemToInventory;
         _inventory.ItemRemoved -= _inventoryView.Remove;
-        
+
         _dash.Return -= ApplyDamage;
     }
 
@@ -82,7 +82,7 @@ public class Player : Character
         if (_inputReader.Dirrection != Vector2.zero)
             _lastDirection = _inputReader.Dirrection.normalized;
 
-        _animatorController.UpdateAnimationParameters(_inputReader.Dirrection, _isDash, isAttack : false);
+        _animatorController.UpdateAnimationParameters(_inputReader.Dirrection, _isDash, isAttack: false);
     }
 
     private void FixedUpdate()
@@ -103,7 +103,7 @@ public class Player : Character
                 _attacker.UpdateAttackZone(_lastDirection);
                 _noiser.CreateNoise();
                 _sound.PlayAttackSound();
-                _animatorController.UpdateAnimationParameters(_inputReader.Dirrection, _isDash, isAttack : true);
+                _animatorController.UpdateAnimationParameters(_inputReader.Dirrection, _isDash, isAttack: true);
             }
 
             if (_inputReader.Dirrection == Vector2.zero)
@@ -120,10 +120,14 @@ public class Player : Character
             if (_interactable.IsLock)
             {
                 if (_inventory.Contains(_interactable.Key))
+                {
                     _interactable.Unlock((Key)_inventory.Take(_interactable.Key));
+                }
 
                 else
+                {
                     _interactable.Interact();
+                }
             }
             else
             {
@@ -133,7 +137,7 @@ public class Player : Character
         }
     }
 
-    public void Initialize(IInputReader inputReader) => 
+    public void Initialize(IInputReader inputReader) =>
         _inputReader = inputReader;
 
     public void Fall(int fallDamage)
@@ -143,13 +147,13 @@ public class Player : Character
     }
 
 
-    public bool GetIsDash() => 
+    public bool GetIsDash() =>
         _isDash;
 
     protected override void OnTakingDamage()
     {
         _sound.PlayHitSound();
-        _animatorController.UpdateAnimationParameters(_inputReader.Dirrection, _isDash, isHit : true);
+        _animatorController.UpdateAnimationParameters(_inputReader.Dirrection, _isDash, isHit: true);
 
         if (_attacker.canAction == false)
             _attacker.OnCanAttack();
@@ -170,15 +174,19 @@ public class Player : Character
 
     private void OnMedKitFounded(MedKit medKit)
     {
-        if (Health.MaxValue > Health.Value) 
+        if (Health.MaxValue > Health.Value)
         {
             Heal(medKit.Value);
             medKit.Collect();
+            _sound.PlayMedKitCollectSound();
         }
     }
 
-    private void OnKeyFounded(Key key) => 
+    private void OnKeyFounded(Key key)
+    {
         _inventory.Add(key);
+        _sound.PlayKeyCollectSound();
+    }
 
     private void AddItemToInventory(IItem item)
     {
@@ -186,6 +194,6 @@ public class Player : Character
         item.Collect();
     }
 
-    private void ReturnToSafeZone() => 
+    private void ReturnToSafeZone() =>
         transform.position = _dash.GetIsPointDash();
 }

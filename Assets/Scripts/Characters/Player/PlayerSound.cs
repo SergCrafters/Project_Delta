@@ -8,6 +8,8 @@ public class PlayerSound : MonoBehaviour
     [SerializeField] private AudioClip _attackSound;
     [SerializeField] private AudioClip _dashSound;
     [SerializeField] private AudioClip _deathSound;
+    [SerializeField] private AudioClip _medKitCollectSound;
+    [SerializeField] private AudioClip _keyCollectSound;
 
     private float _nextPlayStepTime;
 
@@ -31,5 +33,11 @@ public class PlayerSound : MonoBehaviour
 
     public void PlayDeathSound() => 
         _audioManager.PlaySound(_deathSound);
+
+    public void PlayMedKitCollectSound() => 
+        _audioManager.PlaySound(_medKitCollectSound);
+
+    public void PlayKeyCollectSound() => 
+        _audioManager.PlaySound(_keyCollectSound);
 
 }

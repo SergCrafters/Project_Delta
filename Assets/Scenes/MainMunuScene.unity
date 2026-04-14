@@ -304,7 +304,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 58755116}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -312,12 +312,12 @@ RectTransform:
   - {fileID: 1422640267}
   - {fileID: 2067151973}
   - {fileID: 2109287316}
-  m_Father: {fileID: 979388526}
+  m_Father: {fileID: 647429256}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.045791667, y: 0.072333336}
   m_AnchorMax: {x: 0.53314584, y: 0.637}
-  m_AnchoredPosition: {x: -2.0620117, y: 1.487793}
-  m_SizeDelta: {x: 2.418579, y: 0.5352783}
+  m_AnchoredPosition: {x: 0.5092163, y: -175.19296}
+  m_SizeDelta: {x: 936.9599, y: 331.02353}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &58755118
 MonoBehaviour:
@@ -1453,6 +1453,56 @@ MonoBehaviour:
   references:
     version: 2
     RefIds: []
+--- !u!1 &647429255
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 647429256}
+  - component: {fileID: 647429257}
+  m_Layer: 5
+  m_Name: MenuPanel
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &647429256
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 647429255}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 58755117}
+  - {fileID: 779681680}
+  m_Father: {fileID: 979388526}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -406.282, y: 91.62004}
+  m_SizeDelta: {x: 2.418579, y: 494.71976}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!225 &647429257
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 647429255}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &652600272
 GameObject:
   m_ObjectHideFlags: 0
@@ -1819,18 +1869,18 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 779681679}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 20713135}
-  m_Father: {fileID: 979388526}
+  m_Father: {fileID: 647429256}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.030270835, y: 0.7388519}
   m_AnchorMax: {x: 0.5544584, y: 0.88888896}
-  m_AnchoredPosition: {x: -7.6220703, y: -0.49560547}
-  m_SizeDelta: {x: -68.302, y: 0.9909}
+  m_AnchoredPosition: {x: 0.50213623, y: 91.58655}
+  m_SizeDelta: {x: 936.87024, y: 88.804596}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &779681681
 MonoBehaviour:
@@ -2384,7 +2434,7 @@ GameObject:
   - component: {fileID: 979388527}
   - component: {fileID: 979388529}
   m_Layer: 5
-  m_Name: MenuPanel
+  m_Name: MenuBack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2402,8 +2452,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 58755117}
-  - {fileID: 779681680}
+  - {fileID: 647429256}
   m_Father: {fileID: 11769160}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -2466,6 +2515,20 @@ MonoBehaviour:
   _selectLevelButton: {fileID: 2067151974}
   _settingsWindow: {fileID: 70014692}
   _selectLevelWindow: {fileID: 1991560271}
+  _helloLocale:
+    m_TableReference:
+      m_TableCollectionName: 
+    m_TableEntryReference:
+      m_KeyId: 0
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  _showingTime: 1
+  _menuPanel: {fileID: 647429257}
+  references:
+    version: 2
+    RefIds: []
 --- !u!1 &982045159
 GameObject:
   m_ObjectHideFlags: 0
