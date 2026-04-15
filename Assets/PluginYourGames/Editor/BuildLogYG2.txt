@@ -1,0 +1,3 @@
+﻿Build path: D:/Unity/Project/Project_Delta/Builds
+Build number: 0
+PluginYG version: 2.009
